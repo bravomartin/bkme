@@ -1,0 +1,42 @@
+to run once
+program for transfering cakemix to mongo
+
+to run periodically
+program for periodically look for images within img sharing sites.
+	get the posts without that data already taken
+	get the img url, store it somewhere
+	add link to the original image to existing entry
+	add link to stored image to existing entry
+
+
+to run all the time
+program for streaming using mongo
+wait for tweet matching #bkme
+	check if it has an image #stop
+	check if it has geolocation 
+		#stop and send instructions
+	get the address
+	generate the tweet and send.
+	
+	send data to database
+		including:
+			tweet unique id
+			user_id
+			user name
+			text
+			geolocation
+			address
+			created at
+			url
+			media_url
+			local_filename
+			entire response
+			
+		
+run periodically or after a crush	
+secondary loop to search api
+	check if tweet was already collected #stop
+		repeat process of scraping the information from it
+		send a different message to user: sorry we were off but here it is (or something like that)
+		store it in the database.
+		

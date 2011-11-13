@@ -1,0 +1,5 @@
+.DS_Store
+reports
+reports/**/*
+_OLD/**/*
+_OLD

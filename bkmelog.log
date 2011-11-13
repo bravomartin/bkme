@@ -1,0 +1,198 @@
+Script started on Thu Nov  3 17:18:35 2011
+bash-3.2$ [Athanks[Aruby bkme.rb
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+back on track! throw some #bkme, amigo...
+ 
+Failed to reconnect after 7 tries.
+/Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/faraday/response/raise_http_4xx.rb:14:in `on_complete': POST https://api.twitter.com/1/statuses/update.json: 403: Status is a duplicate. (Twitter::Forbidden)
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/response.rb:9:in `call'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/response.rb:62:in `on_complete'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/response.rb:8:in `call'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/request/url_encoded.rb:14:in `call'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/request/multipart.rb:13:in `call'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/faraday/request/twitter_oauth.rb:17:in `call'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/faraday/request/multipart_with_file.rb:18:in `call'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/connection.rb:207:in `run_request'
+	from /Library/Ruby/Gems/1.8/gems/faraday-0.7.5/lib/faraday/connection.rb:94:in `post'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter/request.rb:27:in `send'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter/request.rb:27:in `request'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter/request.rb:10:in `post'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter/client/tweets.rb:45:in `update'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter.rb:21:in `send'
+	from /Library/Ruby/Gems/1.8/gems/twitter-1.7.2/lib/twitter.rb:21:in `method_missing'
+	from bkme.rb:135
+bash-3.2$ [Aruby bkme.rb
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+back on track! throw some #bkme, amigo...
+ 
+@reedandrader says: #bkme 22194 jx http://t.co/0dMfNtbs
+no photo, no report
+no plate found
+sent!: sorry @reedandrader, for now I can only report location-enabled notifications. please activate it in your device.
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme 63012jy http://t.co/w2uuJT8I
+geolocation: 40.6965951,-73.970011
+address: 43 Vanderbilt Ave, Clinton Hill.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 43 Vanderbilt Ave, Clinton Hill. http://t.co/w2uuJT8I. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme http://t.co/0ao15RJk
+geolocation: 40.6965951,-73.970011
+address: 43 Vanderbilt Ave, Clinton Hill.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 43 Vanderbilt Ave, Clinton Hill. http://t.co/0ao15RJk. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme wgs52h http://t.co/fCIzKTNQ
+geolocation: 40.6965951,-73.970011
+address: 43 Vanderbilt Ave, Clinton Hill.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 43 Vanderbilt Ave, Clinton Hill. http://t.co/fCIzKTNQ. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme http://t.co/FbfsH4ZR
+geolocation: 40.720993,-73.9927606
+address: 173 Chrystie St, Bowery.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 173 Chrystie St, Bowery. http://t.co/FbfsH4ZR. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@willgame says: 82362jy #bkme http://t.co/OT01TcWN
+geolocation: 40.68992317,-73.95530772
+address: 1022 Bedford Ave, Bedford - Stuyvesant.
+no photo, no report
+no plate found
+Data saved to cakemix
+
+waiting for a new #bkme...
+@willgame says: 12089jy #bkme http://t.co/NBwMsHnK
+geolocation: 40.72373045,-73.98923717
+address: 62 E 1st St, Bowery.
+no photo, no report
+no plate found
+Data saved to cakemix
+
+waiting for a new #bkme...
+@freddytruman says: #bkme fmc9983 http://t.co/dBPlWEQd
+no plate found
+sent!: sorry @freddytruman, for now I can only report location-enabled notifications. please activate it in your device.
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme agh6945 http://t.co/2jsqy820
+geolocation: 40.6967267,-73.9786046
+address: 45 Park Ave, Fort Greene.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 45 Park Ave, Fort Greene. http://t.co/2jsqy820. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+Failed to reconnect after 7 tries.
+bash-3.2$ [Aruby bkme.rb
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+back on track! throw some #bkme, amigo...
+ 
+@brvmrtn says: #bkme t509387c #cab http://t.co/gZtxzn70
+geolocation: 40.71041563,-73.95901424
+address: 204-224 S 4th St, Williamsburg.
+no photo, no report
+no plate found
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme fhl4360 http://t.co/Kwfh7nHo
+geolocation: 40.6960733,-73.9737514
+address: Interstate 278 Brooklyn, Kings.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on Interstate 278 Brooklyn, Kings. http://t.co/Kwfh7nHo. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme http://t.co/kTqSVMXo
+geolocation: 40.6960733,-73.9737514
+address: Interstate 278 Brooklyn, Kings.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on Interstate 278 Brooklyn, Kings. http://t.co/kTqSVMXo. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@brvmrtn says: #bkme fpb1948 http://t.co/iacQzFdC
+geolocation: 40.71991891,-73.9879107
+address: 111 Rivington St, Downtown.
+no photo, no report
+no plate found
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme 94054jx http://t.co/UsnLSl96
+geolocation: 40.7212829,-73.9979572
+address: 199 Lafayette St, Downtown.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 199 Lafayette St, Downtown. http://t.co/UsnLSl96. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+@freddytruman says: #bkme FTC9605 http://t.co/P21Z9kJC
+geolocation: 40.70155692,-73.96354621
+address: 667 Kent Ave, Williamsburg.
+no photo, no report
+no plate found
+Data saved to cakemix
+
+waiting for a new #bkme...
+@lovelikerobots says: #bkme http://t.co/Lp5VkwaU
+geolocation: 40.7207081,-73.9959063
+address: 183 Mott St, NoLita.
+no plate found
+sent!: @lovelikerobots just BKED a car in the bikelane on 183 Mott St, NoLita. http://t.co/Lp5VkwaU. follow @bkme_ny for updates.
+Data saved to cakemix
+
+waiting for a new #bkme...
+Could not parse data entirely
+bash-3.2$ exit
+
+Script done on Tue Nov  8 20:25:26 2011
