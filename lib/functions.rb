@@ -33,7 +33,8 @@ end
 
 def find_url entities
   url = nil
-  if entities[:urls] != []
+  if entities[:urls] != [] && !entities[:urls].nil?
+    puts entities[:urls]
     #for yfrog: Construct URL like <YOURURL>:iphone. For example, http://yfrog.com/0kratsj:iphone.
     urls = entities[:urls]
     if urls != []
@@ -100,6 +101,31 @@ def shorten (string, count = 50)
 	else 
 		string
 	end
+end
+
+
+def send_tweet(status,options)
+  too_often = false
+  t = Twitter.user_timeline({:count => 1})
+  l = t[0]["created_at"] if !t.nil?
+  last_time = Time.parse(l)
+  if Time.now - last_time < 10 then too_often = true end
+    
+  begin
+    if !status.nil?
+     Twitter.update(status, options)
+      puts "REPLIED: " +  status
+      if too_often
+        puts "sleeping 5 seconds..."
+        sleep(5)
+      end
+    end
+  rescue Exception => e
+    puts "Related to send tweet"
+    puts e.message
+  end
+
+
 end
 
 ############################### MAIN FUNCTION ###############################

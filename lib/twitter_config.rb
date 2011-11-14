@@ -24,6 +24,7 @@ $db = Mongo::Connection.new("dbh84.mongolab.com", 27847).db("bkme")
 
   #load collection to insert reports in
   $reports = $db.collection("records")
+  auth = $db.authenticate("bkme","youwerebiked1")
 
 #authtenticating the TweetStream object
 TweetStream.configure do |config|
