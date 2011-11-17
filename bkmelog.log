@@ -196,3 +196,535 @@ Could not parse data entirely
 bash-3.2$ exit
 
 Script done on Tue Nov  8 20:25:26 2011
+Script started on Tue Nov  8 20:26:04 2011
+bash-3.2$ llss
+bkme.art		bkmelog.log		log
+bkme.rb			dev			twitter_config.rb
+bkme_dev.rb		functions.rb		twitter_config_t.rb
+bash-3.2$ [Als[Aruby bkme.rb
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+/Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `gem_original_require': no such file to load -- mongo (LoadError)
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `require'
+	from ./lib/twitter_config_t.rb:4
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `require'
+	from bkme.rb:16
+bash-3.2$ llss
+_OLD		bkme.art	bkmelog.log	lib
+app roadmap.txt	bkme.rb		dev		reports
+bash-3.2$ llss
+_OLD		bkme.art	bkmelog.log	lib
+app roadmap.txt	bkme.rb		dev		reports
+bash-3.2$ ppwwdd
+/Users/project/dropbox/itp/bkme
+bash-3.2$ rruubbyy  bbkk	me..rr	b 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+/Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `gem_original_require': no such file to load -- mongo (LoadError)
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `require'
+	from ./lib/twitter_config.rb:4
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `gem_original_require'
+	from /Library/Ruby/Site/1.8/rubygems/custom_require.rb:36:in `require'
+	from bkme.rb:16
+bash-3.2$ ggeemm  iinnssttaallll  mmoonnggoo
+Fetching: bson-1.4.0.gemFetching: bson-1.4.0.gem (  8%)Fetching: bson-1.4.0.gem ( 18%)Fetching: bson-1.4.0.gem ( 23%)Fetching: bson-1.4.0.gem ( 38%)Fetching: bson-1.4.0.gem ( 48%)Fetching: bson-1.4.0.gem ( 68%)Fetching: bson-1.4.0.gem ( 73%)Fetching: bson-1.4.0.gem ( 88%)Fetching: bson-1.4.0.gem (100%)Fetching: bson-1.4.0.gem (100%)
+ERROR:  While executing gem ... (Gem::FilePermissionError)
+    You don't have write permissions into the /usr/bin directory.
+bash-3.2$ ssuuddoo  ggeemm  iinnssttaallll  mmoonnggoo
+Password:apple
+Fetching: mongo-1.4.0.gemFetching: mongo-1.4.0.gem (  2%)Fetching: mongo-1.4.0.gem ( 12%)Fetching: mongo-1.4.0.gem ( 18%)Fetching: mongo-1.4.0.gem ( 22%)Fetching: mongo-1.4.0.gem ( 28%)Fetching: mongo-1.4.0.gem ( 33%)Fetching: mongo-1.4.0.gem ( 38%)Fetching: mongo-1.4.0.gem ( 40%)Fetching: mongo-1.4.0.gem ( 48%)Fetching: mongo-1.4.0.gem ( 52%)Fetching: mongo-1.4.0.gem ( 58%)Fetching: mongo-1.4.0.gem ( 71%)Fetching: mongo-1.4.0.gem ( 75%)Fetching: mongo-1.4.0.gem ( 88%)Fetching: mongo-1.4.0.gem (100%)Fetching: mongo-1.4.0.gem (100%)
+Successfully installed bson-1.4.0
+Successfully installed mongo-1.4.0
+2 gems installed
+Installing ri documentation for bson-1.4.0...
+Installing ri documentation for mongo-1.4.0...
+Installing RDoc documentation for bson-1.4.0...
+Installing RDoc documentation for mongo-1.4.0...
+bash-3.2$ ggeemm  iinnssttaallll  bbssoonn__eexxtt
+Fetching: bson_ext-1.4.0.gemFetching: bson_ext-1.4.0.gem (  2%)Fetching: bson_ext-1.4.0.gem (  4%)Fetching: bson_ext-1.4.0.gem ( 12%)Fetching: bson_ext-1.4.0.gem ( 25%)Fetching: bson_ext-1.4.0.gem ( 32%)Fetching: bson_ext-1.4.0.gem ( 42%)Fetching: bson_ext-1.4.0.gem ( 60%)Fetching: bson_ext-1.4.0.gem ( 68%)Fetching: bson_ext-1.4.0.gem ( 70%)Fetching: bson_ext-1.4.0.gem ( 98%)Fetching: bson_ext-1.4.0.gem (100%)Fetching: bson_ext-1.4.0.gem (100%)
+Building native extensions.  This could take a while...
+
+Successfully installed bson_ext-1.4.0
+1 gem installed
+Installing ri documentation for bson_ext-1.4.0...
+
+No definition for method_serialize
+
+No definition for method_deserialize
+
+No definition for method_max_bson_size
+
+No definition for method_update_max_bson_size
+Installing RDoc documentation for bson_ext-1.4.0...
+
+No definition for method_serialize
+
+No definition for method_deserialize
+
+No definition for method_max_bson_size
+
+No definition for method_update_max_bson_size
+bash-3.2$ 
+bash-3.2$ ssuuddii  [K[K[K[K[K[Agem install bson_ext[C[C[C[C[C[C[C[C[C[Cs[4hs[4lu[4hu[4ld[4hd[4lo[4ho[4l [4h [4l
+Building native extensions.  This could take a while...
+Successfully installed bson_ext-1.4.0
+1 gem installed
+Installing ri documentation for bson_ext-1.4.0...
+
+No definition for method_serialize
+
+No definition for method_deserialize
+
+No definition for method_max_bson_size
+
+No definition for method_update_max_bson_size
+Installing RDoc documentation for bson_ext-1.4.0...
+
+No definition for method_serialize
+
+No definition for method_deserialize
+
+No definition for method_max_bson_size
+
+No definition for method_update_max_bson_size
+bash-3.2$ [Asudo gem install bson_ext[A[C[C[C[C[C[C[C[C[C[C[5P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[C[C[C[C[C[C[C[C[C[Csudo gem install mongo[A[C[C[C[C[C[C[C[C[C[C[5P[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[A[C[C[C[C[C[C[C[C[C[C[4Pruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+last tweet: problemas! help @brvmrtn!
+Back on track! throw me some #bkme, amigo...
+/Library/Ruby/Gems/1.8/gems/twitter-stream-0.1.14/lib/twitter/json_stream.rb:121:in `<<': Could not parse data entirely (HTTP::Parser::Error)
+	from /Library/Ruby/Gems/1.8/gems/twitter-stream-0.1.14/lib/twitter/json_stream.rb:121:in `receive_data'
+	from /Library/Ruby/Gems/1.8/gems/eventmachine-0.12.10/lib/eventmachine.rb:256:in `run_machine'
+	from /Library/Ruby/Gems/1.8/gems/eventmachine-0.12.10/lib/eventmachine.rb:256:in `run'
+	from /Library/Ruby/Gems/1.8/gems/tweetstream-1.1.2/lib/tweetstream/client.rb:321:in `start'
+	from /Library/Ruby/Gems/1.8/gems/tweetstream-1.1.2/lib/tweetstream/client.rb:122:in `filter'
+	from /Library/Ruby/Gems/1.8/gems/tweetstream-1.1.2/lib/tweetstream/client.rb:89:in `track'
+	from bkme.rb:43
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+bkme.rb:23: undefined method `[]' for nil:NilClass (NoMethodError)
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+bkme.rb:23: undefined method `[]' for nil:NilClass (NoMethodError)
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+#<NoMethodError: undefined method `[]' for nil:NilClass>
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+#<NameError: undefined local variable or method `last_tweet' for main:Object>
+no back in track message sent.
+^[[A^D^D
+^D^CInterrupt
+bash-3.2$ [Aruby bkme.rb 
+bkme.rb:49: syntax error, unexpected kRESCUE, expecting $end
+rescue Exception => e
+      ^
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+Back on track! throw me some #bkme, amigo...
+repeated: Back on track! throw me some #bkme, amigo...
+lpp@freddytruman says: #bkme ERG3964 http://t.co/S5glpW9c
+url found: pic.twitter.com/S5glpW9c
+photo found: http://p.twimg.com/Ad5355ECMAExs2i.jpg
+geolocation: 40.68979484,-73.97253396
+address: 179 Dekalb Ave, Fort Greene, NY
+somewhere else
+#<NameError: undefined local variable or method `last_status' for main:Object>
+#<TweetStream::ReconnectError: Failed to reconnect after 7 tries.>
+bash-3.2$ lpp[K[K[K[Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+db authorized.
+Twitter authenticated successfully
+last tweet: Back on track! throw me some #bkme, amigo...
+repeated, not sent: Back on track! throw me some #bkme, amigo...
+^D^CInterrupt
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+Twitter authenticated successfully
+#<NoMethodError: undefined method `[]' for nil:NilClass>
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+Twitter authenticated successfully
+last tweet: Back on track! throw me some #bkme, amigo...
+Back on track! throw me some #bkme, amigo... (not sent)
+
+@brvmrtn says: #bkme fec2422 http://t.co/Irs0JQNO
+url found: pic.twitter.com/Irs0JQNO
+photo found: http://p.twimg.com/AeAATg9CEAAkI-s.jpg
+geolocation: 40.72776447,-73.98319222
+address: 435 E 9th St, Alphabet City, New York
+REPLIED: @brvmrtn just BKED license plate FEC2422 in the bikelane on 435 E 9th St, Alphabet City pic.twitter.com/Irs0JQNO.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme dyn6374 http://t.co/LIHL5LVf
+url found: pic.twitter.com/LIHL5LVf
+photo found: http://p.twimg.com/AeExMC_CQAAh30Z.jpg
+geolocation: 40.69115412,-73.95193749
+address: 590 Dekalb Ave, Bedford - Stuyvesant, Kings
+REPLIED: @brvmrtn just BKED license plate DYN6374 in the bikelane on 590 Dekalb Ave, Bedford - Stuyvesant pic.twitter.com/LIHL5LVf.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme 188zgv http://t.co/RMiOPzwJ
+url found: pic.twitter.com/RMiOPzwJ
+photo found: http://p.twimg.com/AeExeoRCIAA_NWf.jpg
+geolocation: 40.69102395,-73.9549641
+address: 535-551 Dekalb Ave, Tompkins Park North, NY
+REPLIED: @brvmrtn just BKED license plate 188ZGV in the bikelane on 535-551 Dekalb Ave, Tompkins Park North pic.twitter.com/RMiOPzwJ.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme grv5877 http://t.co/kth5Z9vi
+url found: pic.twitter.com/kth5Z9vi
+photo found: http://p.twimg.com/AeEy25gCIAAwU-k.jpg
+geolocation: 40.68972545,-73.96515544
+address: 1-21 St James Pl, Clinton Hill, NY
+REPLIED: @brvmrtn just BKED license plate GRV5877 in the bikelane on 1-21 St James Pl, Clinton Hill pic.twitter.com/kth5Z9vi.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme dvv8566 http://t.co/NDsd7DXm
+url found: pic.twitter.com/NDsd7DXm
+photo found: http://p.twimg.com/AeEz3KVCAAACMOR.jpg
+geolocation: 40.68983814,-73.97184043
+address: 263 Carlton Ave, Fort Greene, NY
+REPLIED: @brvmrtn just BKED license plate DVV8566 in the bikelane on 263 Carlton Ave, Fort Greene pic.twitter.com/NDsd7DXm.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme fpn6060 http://t.co/hd19mvd1
+url found: pic.twitter.com/hd19mvd1
+photo found: http://p.twimg.com/AeE0VH_CQAA16Lt.jpg
+geolocation: 40.68963088,-73.97298233
+address: 177 Dekalb Ave, Fort Greene, Kings
+REPLIED: @brvmrtn just BKED license plate FPN6060 in the bikelane on 177 Dekalb Ave, Fort Greene pic.twitter.com/hd19mvd1.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme xr894g http://t.co/eeI3MLJ3
+url found: pic.twitter.com/eeI3MLJ3
+photo found: http://p.twimg.com/AeE0nHrCEAECFs_.jpg
+geolocation: 40.68978711,-73.98059563
+address: 40-62 Dekalb Ave, Downtown Brooklyn, NY
+REPLIED: @brvmrtn just BKED license plate XR894G in the bikelane on 40-62 Dekalb Ave, Downtown Brooklyn pic.twitter.com/eeI3MLJ3.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: @brvmrtn estas en fuego, hombre!  #bkme
+no photo, no tweet.
+
+waiting for a new #bkme...
+
+@brvmrtn says: #bkme evs2313 http://t.co/GfLAwGbY
+url found: pic.twitter.com/GfLAwGbY
+photo found: http://p.twimg.com/AeKFicYCEAEJlwL.jpg
+geolocation: 40.69998937,-73.9439451
+address: 127-145 Throop Ave, Brooklyn, US
+REPLIED: @brvmrtn just BKED license plate EVS2313 in the bikelane on 127-145 Throop Ave, Brooklyn pic.twitter.com/GfLAwGbY.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: #bkme fen2601 http://t.co/tGgcT6ws
+url found: pic.twitter.com/tGgcT6ws
+photo found: http://p.twimg.com/AeKR6ebCQAE6ETV.jpg
+geolocation: 40.71997661,-73.98532106
+address: 13248 Suffolk St, Lower East Side, New York
+REPLIED: @freddytruman just BKED license plate FEN2601 in the bikelane on 13248 Suffolk St, Lower East Side pic.twitter.com/tGgcT6ws.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: #bkme dcs4031 http://t.co/qwAii7RB
+url found: pic.twitter.com/qwAii7RB
+photo found: http://p.twimg.com/AeKSTUICQAAtOeZ.jpg
+geolocation: 40.719245,-73.98591776
+address: 122 Suffolk St, Lower East Side, New York
+REPLIED: @freddytruman just BKED license plate DCS4031 in the bikelane on 122 Suffolk St, Lower East Side pic.twitter.com/qwAii7RB.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: #BKME epf5197 http://t.co/lzlSp4fj
+url found: pic.twitter.com/lzlSp4fj
+photo found: http://p.twimg.com/AeN5mlsCEAAV_f0.jpg
+geolocation: 40.70735861,-73.96107604
+address: 347 Roebling St, Williamsburg, Kings
+REPLIED: @freddytruman just BKED license plate EPF5197 in the bikelane on 347 Roebling St, Williamsburg pic.twitter.com/lzlSp4fj.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@lovelikerobots says: #bkme http://t.co/4Mx6eLJm
+url found: twitpic.com/7ek48f
+geolocation: 40.72305954,-73.9967482
+address: 247 Lafayette St, Downtown, New York
+REPLIED: @lovelikerobots just BKED license plate HTTP://T.CO/4MX6ELJM in the bikelane on 247 Lafayette St, Downtown twitpic.com/7ek48f.
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+#<HTTP::Parser::Error: Could not parse data entirely>
+bash-3.2$ 
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+last tweet: @lovelikerobots just BKED license plate http://t.co/4MX6ELJM in the bikelane on 247 Lafayette St, Downtown http://t.co/UQ3ToJyM.
+Back on track! throw me some #bkme, amigo...
+somewhere else
+#<HTTP::Parser::Error: Could not parse data entirely>
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+last tweet: problemas! help @brvmrtn!
+#<Twitter::Forbidden: POST https://api.twitter.com/1/statuses/update.json: 403: Status is a duplicate.>
+i coudn't send the message.
+^D^Csomewhere else
+Interrupt
+bash-3.2$ [Aruby bkme.rb 
+[2J[f                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+last tweet: problemas! help @brvmrtn!
+Back on track! get me some cars, amigo...
+@freddytruman says: #BKME fje2766 http://t.co/3tS3hPpI
+url found: pic.twitter.com/3tS3hPpI
+photo found: http://p.twimg.com/Aed7REWCIAI2dDd.jpg
+geolocation: 40.71916688,-73.98487723
+address: 72 Clinton St, Downtown, New York
+REPLIED: @freddytruman just got FJE2766 in the bikelane at 72 Clinton St, Downtown, New York pic.twitter.com/3tS3hPpI. more to come soon
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: #BKME 50049jx http://t.co/iId0N8MN
+url found: pic.twitter.com/iId0N8MN
+photo found: http://p.twimg.com/Aed7lNdCAAITIVk.jpg
+geolocation: 40.71951774,-73.98490422
+address: 57 Clinton St, Lower East Side, New York
+REPLIED: @freddytruman just got 50049JX in the bikelane at 57 Clinton St, Lower East Side, New York pic.twitter.com/iId0N8MN. more to come soon
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+
+@freddytruman says: #BKME 731009 http://t.co/gFLAdocT
+url found: pic.twitter.com/gFLAdocT
+photo found: http://p.twimg.com/Aed9DpnCEAAiXq9.jpg
+geolocation: 40.7278665,-73.98803084
+address: 48 E 7th St, East Village, New York
+REPLIED: @freddytruman just got 731009 in the bikelane at 48 E 7th St, East Village, New York pic.twitter.com/gFLAdocT. more to come soon
+db authorized.
+RECORD ADDED
+
+waiting for a new #bkme...
+

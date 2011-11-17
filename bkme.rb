@@ -38,7 +38,7 @@ track_terms = ['#bkme', '#BKME', '#Bkme', '#bkmetst']
 #now = Time.now.strftime("%I:%M%p")
 
 begin
-  back = "Back on track! throw me some #bkme, amigo..."
+  back = "Back on track! get me some cars, amigo..."
   if back != last_status
     Twitter.update(back)
     puts back
@@ -47,7 +47,7 @@ begin
   end
 rescue Exception => e
   puts e.inspect
-  puts "i coudn't send the message."
+  puts "I coudn't send the message, but still get me some cars, amigo..."
 end
 
 

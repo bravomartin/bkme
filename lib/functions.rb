@@ -4,8 +4,13 @@ def get_address(geodata)
         geo = geodata[:coordinates].join(",")
         puts "geolocation: " + geo
         uri_for_google = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+geo+"&sensor=true"
+      begin
         data = Net::HTTP.get(URI.parse(uri_for_google))
         result = JSON.parse(data)
+      rescue Exception => e
+        puts "related to get address"
+        puts e.message
+      end
         number = result["results"][0]["address_components"][0]["short_name"]
         street = result["results"][0]["address_components"][1]["short_name"]
         neighborhood = result["results"][0]["address_components"][2]["short_name"]
@@ -169,11 +174,11 @@ def process_tweet status
 
         # generate the tweet
         if !plate.nil? && !url.nil?
-          new_status = "@"+ user + " just BKED car license plate "+plate+" in the bikelane on "+address+" "+ url + ". follow me for updates."   
-          new_status_short = "@"+ user + " just BKED license plate "+plate+" in the bikelane on "+address_short+" "+ url + "."   
+          new_status = "@"+ user + " just got "+plate+" in the bikelane at "+address+" "+ url + ". more to come soon"   
+          new_status_short = "@"+ user + " just got "+plate+" in the bikelane at "+address_short+" "+ url + "."   
         elsif !url.nil?
-          new_status = "@"+ user + " just BKED a car in the bikelane on " + address + " " + url + ". follow me for updates."
-          new_status_short = "@"+ user + " just BKED a car in the bikelane on " + address_short + " " + url + "."
+          new_status = "@"+ user + " just got a car in the bikelane at " + address + " " + url + ". follow me for updates."
+          new_status_short = "@"+ user + " just got a car in the bikelane at " + address_short + " " + url + "."
         else
           new_status = ""  
         end
