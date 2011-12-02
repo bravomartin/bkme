@@ -4,7 +4,12 @@ GEM
     activesupport (3.1.2)
       multi_json (~> 1.0)
     addressable (2.2.6)
+    aws-s3 (0.6.2)
+      builder
+      mime-types
+      xml-simple
     bson (1.4.0)
+    builder (3.0.0)
     daemons (1.1.4)
     eventmachine (0.12.10)
     faraday (0.7.5)
@@ -13,6 +18,7 @@ GEM
       rack (>= 1.1.0, < 2)
     http_parser.rb (0.5.3)
     json (1.6.1)
+    mime-types (1.17.2)
     mongo (1.4.0)
       bson (= 1.4.0)
     multi_json (1.0.3)
@@ -35,11 +41,13 @@ GEM
       simple_oauth (~> 0.1.4)
     twitter-text (1.4.13)
       activesupport
+    xml-simple (1.1.1)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aws-s3
   json
   mongo
   tweetstream

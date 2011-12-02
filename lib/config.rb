@@ -1,6 +1,9 @@
+
 begin
 require 'rubygems'
 require 'tweetstream'
+puts "got here"
+gem 'twitter' , '= 1.7.2'
 require 'twitter'
 require 'mongo'
 
@@ -46,14 +49,13 @@ TweetStream.configure do |config|
   config.auth_method = :oauth
   config.parser   = :yajl
 end
-
 # authenticating the Twitter object
 Twitter.configure do |config|
   config.consumer_key = CONSUMER_KEY
   config.consumer_secret = CONSUMER_SECRET
   config.oauth_token = OAUTH_TOKEN
   config.oauth_token_secret = OAUTH_TOKEN_SECRET
-#  puts "Twitter authenticated successfully"
+  puts "Twitter authenticated successfully"
 end
 
 

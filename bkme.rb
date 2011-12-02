@@ -3,18 +3,13 @@
 #Copyright (c) 2011 #BKME. Defend the bike lane!.
 #version: 0.21
 
-require 'bundler'
-Bundler.require
-
+# require 'bundler'
+# Bundler.require
+# 
 
 
 begin
 $LOAD_PATH << './lib'
-#load gems
-require 'rubygems'
-require 'net/http'
-require 'net/https'
-require 'JSON'
 
 #clean screen, show art.
 print "\e[2J\e[f"
@@ -24,8 +19,9 @@ art.each do |l|
 end
 
 #load local dependencies
-require 'config'
-require 'functions'
+require './lib/config'
+require './lib/functions'
+
 
 #folder where the images will go
 route = "reports/images/"
@@ -45,7 +41,7 @@ track_terms = ['#bkme', '#BKME', '#Bkme']
 begin
   back = "Back on track! get me some cars, amigo..."
   if back != last_status
-    Twitter.update(back)
+    #Twitter.update(back)
     puts back
   else
     puts back + " (not sent)"
@@ -61,13 +57,16 @@ TweetStream::Client.new.track(track_terms) do |status|
 end
 
 
-
-
+rescue Interrupt => e
+  puts "\nProgram finished by the user."
 rescue Exception => e
   puts "somewhere else"
-  puts e.inspect
+  puts e.message
+  puts e.backtrace
   error = "problemas! help @brvmrtn!"
   if error != last_status
-    Twitter.update(error)
+    #Twitter.update(error)
+    puts error
+    
   end
 end
