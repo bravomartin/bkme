@@ -19,7 +19,7 @@ art.each do |l|
 end
 
 #load local dependencies
-require 'twitter_config'
+require 'config'
 require 'functions'
 users = {}
 
