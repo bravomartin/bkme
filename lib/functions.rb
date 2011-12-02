@@ -82,13 +82,8 @@ end
 
 def find_plate text
   plate = nil
-  words = text.split(/\s/)
-  words.first(2).each do |word|
-    isbk = word =~ /#[Bb][Kk][Mm][Ee]/ 
-    if word =~/\w{5,8}/ && !isbk
-      plate = word.upcase
-    end
-  end
+  re = /\b(\w{5,8})\s/
+  plate = re.match(text)[1] unless !re.match(text)
   if plate.nil? then puts "no plate found" end
   return plate
 end
