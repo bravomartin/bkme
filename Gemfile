@@ -1,10 +1,10 @@
-source "http://rubygems.org"
-source "http://gems.github.com"
+source :rubygems
 
-gem 'rubygems'
 gem 'tweetstream'
 gem 'twitter'
 gem 'mongo'
-gem 'net/http'
-gem 'net/https'
-gem 'JSON'
+gem 'json'
+gem 'aws/s3'
+require 'net/http'
+require 'net/https'
+require 'JSON'
