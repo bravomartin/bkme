@@ -1,6 +1,5 @@
 def get_address(geodata)
   address = nil
-    begin
         geo = geodata[:coordinates].join(",")
         puts "geolocation: " + geo
         uri_for_google = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+geo+"&sensor=true"
@@ -10,6 +9,8 @@ def get_address(geodata)
       rescue Exception => e
         puts "related to get address"
         puts e.message
+        return [0,0]
+        
       end
         number = result["results"][0]["address_components"][0]["short_name"]
         street = result["results"][0]["address_components"][1]["short_name"]
@@ -17,11 +18,9 @@ def get_address(geodata)
         city = result["results"][0]["address_components"][5]["short_name"]
         address = number +" " + street + ", "+ neighborhood + ", "+ city
         address_short = number +" " + street + ", "+ neighborhood
+        address_short = shorten(address_short)
 
-    rescue 
-      puts "ERROR GETTING THE ADDRESS!"
-    end
-    a = {"address" => address, "address_short" => address_short}
+    a = [address, address_short]
   return a
 end
 
@@ -84,7 +83,8 @@ def find_plate text
   plate = nil
   re = /\b(\w{5,8})\s/
   plate = re.match(text)[1] unless !re.match(text)
-  if plate.nil? then puts "no plate found" end
+  if plate.nil? then puts "no plate found" 
+  else puts "found plate no: #{plate}" end
   return plate
 end
 
@@ -104,144 +104,77 @@ def shorten (string, count = 50)
 end
 
 
-def send_tweet(status,options)
-  too_often = false
-  t = Twitter.user_timeline({:count => 1})
-  l = t[0]["created_at"] if !t.nil?
-  last_time = Time.parse(l)
-  if Time.now - last_time < 10 then too_often = true end
-    
+t = Twitter.user_timeline({:count => 1})
+if t.nil? then l = nil else l = t[0]["created_at"] end
+if l.nil? then $last_time = Time.now- 60*10 else $last_time = Time.parse(l) end
+
+def send_tweet(options = {:status =>"nil", :options => nil})
+  
+  if Time.now - $last_time < 10 
+    puts "waiting 10 seconds before sending the next tweet"
+    sleep(10) 
+  end
   begin
     if !status.nil?
-     Twitter.update(status, options)
+     Twitter.update(:status, :options)
       puts "REPLIED: " +  status
-      if too_often
-        puts "sleeping 5 seconds..."
-        sleep(5)
-      end
+      $last_time = Time.now 
     end
   rescue Exception => e
-    puts "Related to send tweet"
     puts e.message
+    puts "\nThere was an error sending the tweet"
   end
 
 
 end
 
+
+
+
+
+
+
 ############################### MAIN FUNCTION ###############################
 
-def process_tweet status
-  #get last tweet
-  last_status = " "
-  t = Twitter.user_timeline({:count => 1})
-  last_status = t[0]["text"] if !t.nil?
-  # get from the object the data we need 
-  user = status.user.screen_name
-  if user != $my_name
-    status_id = status.id
-    user_id = status.user.id
-    hashtags =  status.entities.hashtags
-    entities = status.entities
-    created_at =  status.created_at
-    text = status.text
-    geodata = status.geo
-
-    puts '@'+ user +' says: '+text
-
-    #look for urls
-    #puts entities.inspect
-
-    url = image = nil
-    url = find_url(entities)
-    #look for images
-    image_urls = find_media(entities)
-    #keep going only if there is a photo in the report
-    if !url.nil? or !image_urls.nil?
-      
-      #get the address info (if not present send instructions)
-      if !geodata.nil? 
-        a = get_address(geodata)
-        address = a["address"]
-        puts "address: "+ address
-        address_short = shorten(a["address_short"])
-        #find the plate
-        plate = find_plate(text)
-
-        # generate the tweet
-        if !plate.nil? && !url.nil?
-          new_status = "@"+ user + " just got "+plate+" in the bikelane at "+address+" "+ url + ". more to come soon"   
-          new_status_short = "@"+ user + " just got "+plate+" in the bikelane at "+address_short+" "+ url + "."   
-        elsif !url.nil?
-          new_status = "@"+ user + " just got a car in the bikelane at " + address + " " + url + ". follow me for updates."
-          new_status_short = "@"+ user + " just got a car in the bikelane at " + address_short + " " + url + "."
-        else
-          new_status = ""  
-        end
-        if new_status.length > 140
-          new_status = new_status_short
-        end
-      
-      else 
-        address = nil
-        new_status = "sorry @"+ user + " I only process location-enabled reports. please activate it in your device."
-      end #if geodata
-    else
-      puts "no photo, no tweet."
-    end #if media
-
-    if !new_status.nil? && new_status != last_status
-      # add options
-      options = {}
-      options[:in_reply_to_status_id]  = user_id 
-      if !geodata.nil?
-        options[:lat]= geodata[:coordinates][0]
-        options[:long] = geodata[:coordinates][1]
-      end  
-      # send out the tweet!
-      begin
-        Twitter.update(new_status, options)
-        puts "REPLIED: " +  new_status
-      rescue Exception => e
-        puts "related to send tweet"
-        puts e.message
-      end
-    end #if status not empty
-
-    #if there is address and photo, post the info to the database
-    if !geodata.nil? && !url.nil? 
-      tweetdata = {}
-      tweetdata[:tweet_id] = status_id
-      tweetdata[:user_id] = user_id
-      tweetdata[:user_name] = user
-      tweetdata[:text] = text
-      tweetdata[:geolocation] = geodata[:coordinates].join(",")
-      tweetdata[:address] = address
-      if !url.nil?
-        tweetdata[:url] = url
-      end
-      if !image_urls.nil?
-        tweetdata[:image_url] = image_urls["media_url"]
-        tweetdata[:local_filename] = image_urls["file_route"]
-      end
-      if !plate.nil?
-        tweetdata[:plate] = plate
-      end
-      tweetdata[:created_at] = created_at
-      tweetdata[:response] = status
-      
-      #send data to mongo
-      #authorize credentials
-      auth = $db.authenticate("bkme","youwerebiked1")
-      puts "db authorized." if auth
-      if $reports.find(:tweet_id => status_id).none?
-         $reports.insert(tweetdata)
-         puts "RECORD ADDED"
+def create_response user=>nil, plate=nil, url=nil, geolocation =nil address=[nil,nil], tags=nil
+  
+  
+  
+  options = {}
+  options[:in_reply_to_status_id]  = user_id 
+  if !:geodata.nil?
+    options[:lat]= geodata[:coordinates][0]
+    options[:long] = geodata[:coordinates][1]
+  end
+  
+  return 
+  
+  if !address[0].nil?
+      # generate the tweet
+      if !plate.nil? && !url.nil?
+        new_status = "@"+ user + " just got "+plate+" in the bikelane at "+address[0]+" "+ url + ". more to come soon"   
+        new_status_short = "@"+ user + " just got "+plate+" in the bikelane at "+address[1]+" "+ url + "."   
+      elsif !url.nil?
+        new_status = "@"+ user + " just got a car in the bikelane at " + address[0] + " " + url + ". follow me for updates."
+        new_status_short = "@"+ user + " just got a car in the bikelane at " + address[1] + " " + url + "."
       else
-        $reports.update({:tweet_id => status_id}, tweetdata)
-        puts "RECORD UPDATED"
+        new_status = ""  
       end
-       
-    end #if address and photo
-    puts "\nwaiting for a new #bkme...\n\n"
-  end #end if not myself
+      # if status too long, use short status
+      if new_status.length > 140
+        new_status = new_status_short
+      end
+    elsif geodata.nil?
+        new_status = "sorry @"+ user + " I only process location-enabled reports. please activate it in your device."
+      else
+        new_status = "sorry @#{user}, there was a problem processing your address. Please "
+        address = nil
+      end
+    end #if geodata
+  else
+    puts "no photo, no tweet."
+  end #if media
+
+  send_tweet(new_status, options)
+
 end

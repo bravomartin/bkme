@@ -20,32 +20,49 @@ require 'functions'
 users = {}
 
 
-$my_name = "bkme_ny"
-last_status = " "
-me = Twitter.verify_credentials()
-$my_name = me["screen_name"] if !me.nil?
-t = Twitter.user_timeline({:count => 1})
-last_status = t[0]["text"] if !t.nil?
-#puts "last tweet: " + last_status
+# $my_name = "bkme_ny"
+# last_status = " "
+# me = Twitter.verify_credentials()
+# $my_name = me["screen_name"] if !me.nil?
+# t = Twitter.user_timeline({:count => 1})
+# last_status = t[0]["text"] if !t.nil?
+# #puts "last tweet: " + last_status
 
 
+# puts "trying to get usernames from cakemix" 
+# #get usernames from cakemix
+# uri = "http://www.itpcakemix.com/project/bkme_reports"
+# cakedata = Net::HTTP.get(URI.parse(uri))
+# cakemix = JSON.parse(cakedata)
+# c_users = []
+# cakemix.each do |report|
+#   c_user = report["author"]
+#   c_users << c_user unless c_users.include?(c_user)
+# end
 
 
-uri = "http://search.twitter.com/search.json?q=%23bkme&rpp=100&include_entities=true"
-data = Net::HTTP.get(URI.parse(uri))
-tweets = JSON.parse(data)
-tweets["results"].each do |status|
+c_users = ["brvmrtn", "freddytruman", "lovelikerobots", "willgame"]
+
+user = c_users[2]
+
+tweets = Twitter.user_timeline(user, options={:include_entities => true, :count =>200})
+
+puts "getting tweets from #{user}"
+
+tweets.each do |status|
+  
+ 
   
   #get last tweet
   last_status = " "
-  t = Twitter.user_timeline({:count => 1})
-  last_status = t[0]["text"] if !t.nil?
+  #t = Twitter.user_timeline({:count => 1})
+  #last_status = t[0]["text"] if !t.nil?
   # get from the object the data we need 
-  user = status["from_user"]
-  status_id = status["id"]
-  puts status_id
   
-  if user != $my_name && $reports.find(:tweet_id => status_id).none?
+  status_id = status["id"]
+  text = status["text"]
+  puts text if text.include?("#bkme")
+  if text.include?("#bkme") && $reports.find(:tweet_id => status_id).none?
 
     user_id = status["from_user_id"]
     entities = status["entities"]
@@ -56,7 +73,6 @@ tweets["results"].each do |status|
       geodata = geodata.inject({}){|memo,(k,v)| memo[k.to_sym] = v; memo} if !geodata.nil?
 
     puts '@'+ user +' says: '+text
-
     t = Time.parse(created_at).strftime("%b %d %H:%M")
 
     #look for urls
@@ -140,17 +156,17 @@ tweets["results"].each do |status|
        auth = $db.authenticate("bkme","youwerebiked1")
        puts "db authorized." if auth
        if $reports.find(:tweet_id => status_id).none?
-          $reports.insert(tweetdata)
+         $reports.insert(tweetdata)
           puts "RECORD ADDED"
           
           if !users.key?(user)
             users[user] = 1
-            send_tweet(new_status,options)
+  ######################################          send_tweet(new_status,options)
             
           else
             users[user] +=1
             if users[user] == 2
-              send_tweet(new_status,options)
+######################################              send_tweet(new_status,options)
             end
             
           end
@@ -173,7 +189,7 @@ end
 
 
 users.each_pair do |k,v| 
-  if v > 3
+  if v > 2
     status = "@#{k} we indeed recovered #{v-1} more reports sent by you (we won't flood you with mentions). Keep defending the bikelanes!" 
   else
     status = nil
@@ -181,7 +197,7 @@ users.each_pair do |k,v|
   
   options = {}
   options[:in_reply_to_status_id]  = k
-  send_tweet(status,options)
+########################################  send_tweet(status,options)
   
   
 end

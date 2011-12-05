@@ -2,8 +2,6 @@
 begin
 require 'rubygems'
 require 'tweetstream'
-puts "got here"
-gem 'twitter' , '= 1.7.2'
 require 'twitter'
 require 'mongo'
 
@@ -60,6 +58,7 @@ end
 
 
 rescue Exception => e
+  puts "in the config"
   puts  e.inspect
   
 end
