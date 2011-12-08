@@ -35,6 +35,17 @@ def send_to_cakemix(data)
     end
 end
 
+
+def find_tags entities
+  tags = []
+  if !entities[:hashtags].nil?
+    for entities[:hashtags]
+    tags < 
+  
+  else
+    return nil
+  end
+end
 def find_url entities
   url = nil
   if entities[:urls] != [] && !entities[:urls].nil?
@@ -136,18 +147,19 @@ end
 
 ############################### MAIN FUNCTION ###############################
 
-def create_response user=>nil, plate=nil, url=nil, geolocation =nil address=[nil,nil], tags=nil
+def create_response user=nil, plate=nil, url=nil, geodata =nil address=[nil,nil], tags=nil
   
   
   
   options = {}
   options[:in_reply_to_status_id]  = user_id 
-  if !:geodata.nil?
+  if !geodata.nil?
     options[:lat]= geodata[:coordinates][0]
     options[:long] = geodata[:coordinates][1]
   end
   
-  return 
+  if url.nil? and address[0].nil?
+    return 
   
   if !address[0].nil?
       # generate the tweet
@@ -175,6 +187,5 @@ def create_response user=>nil, plate=nil, url=nil, geolocation =nil address=[nil
     puts "no photo, no tweet."
   end #if media
 
-  send_tweet(new_status, options)
 
 end

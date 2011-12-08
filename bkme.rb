@@ -5,8 +5,7 @@
 
 # require 'bundler'
 # Bundler.require
-# 
-
+ 
 
 begin
 $LOAD_PATH << './lib'
@@ -19,8 +18,8 @@ art.each do |l|
 end
 
 #load local dependencies
-require './lib/config'
-require './lib/functions'
+require 'config'
+require 'functions'
 
 
 #folder where the images will go
@@ -40,7 +39,7 @@ track_terms = ['#bkme', '#BKME', '#Bkme']
 begin
   back = "Back on track! get me some cars, amigo..."
   if back != last_status
-    #Twitter.update(back)
+######Twitter.update(back)
     puts back
   else
     puts back + " (not sent)"
@@ -51,8 +50,13 @@ rescue Exception => e
 end
 
 
-TweetStream::Client.new.track(track_terms) do |status|
+TweetStream::Client.new.on_delete{ |status_id, user_id|  
+  Tweet.delete(status_id)
+}.on_limit { |skip_count|  
+  sleep 10
+}.track(track_terms) do |status|  
 
+  puts Time.now
 
   # get from the object the data we need 
   user = status.user.screen_name
@@ -84,6 +88,8 @@ TweetStream::Client.new.track(track_terms) do |status|
 
     
     response = create_response(user, plate, url, geodata, address, tags)
+    
+    send_tweet(response[:status], response[:options])
     
 
 
