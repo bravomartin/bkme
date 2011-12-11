@@ -1,7 +1,7 @@
 #global modes
 DEBUG = false
-SAFE = true
-TEST = true
+SAFE = false
+TEST = false
 
 puts "***Running in safe mode, nothing will be actually stored or sent***" if SAFE
 puts "***Running in debug mode, using @bkmetst credentials***" if DEBUG
