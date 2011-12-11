@@ -1,7 +1,7 @@
 #BKME stream collect
 #Created by Martin Bravo on 2011-11-10.
 #Copyright (c) 2011 #BKME. Defend the bike lane!.
-#version: 0.21
+#version: 0.3
 
 # require 'bundler'
 # Bundler.require
