@@ -10,27 +10,27 @@ program for periodically look for images within img sharing sites.
 
 
 to run all the time
-program for streaming using mongo
-wait for tweet matching #bkme
-	check if it has an image #stop
-	check if it has geolocation 
-		#stop and send instructions
-	get the address
-	generate the tweet and send.
+X program for streaming using mongo
+X wait for tweet matching #bkme
+X	check if it has an image #stop
+X	check if it has geolocation 
+X		#stop and send instructions
+X	get the address
+X	generate the tweet and send.
 	
-	send data to database
-		including:
-			tweet unique id
-			user_id
-			user name
-			text
-			geolocation
-			address
-			created at
-			url
-			media_url
-			local_filename
-			entire response
+X	send data to database
+x		including:
+x			tweet unique id
+x			user_id
+x			user name
+x			text
+x			geolocation
+x			address
+x			created at
+x			url
+x			media_url
+x			local_filename
+x			entire response
 			
 		
 run periodically or after a crush	
