@@ -1,28 +1,53 @@
-def get_address(geodata)
-  address = nil
-        geo = geodata[:coordinates].join(",")
-        puts "geolocation: " + geo
-        uri_for_google = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+geo+"&sensor=true"
-      begin
-        data = Net::HTTP.get(URI.parse(uri_for_google))
-        result = JSON.parse(data)
-      rescue Exception => e
-        puts "related to get address"
-        puts e.message
-        return [0,0]
-        
-      end
-        number = result["results"][0]["address_components"][0]["short_name"]
-        street = result["results"][0]["address_components"][1]["short_name"]
-        neighborhood = result["results"][0]["address_components"][2]["short_name"]
-        city = result["results"][0]["address_components"][5]["short_name"]
-        address = number +" " + street + ", "+ neighborhood + ", "+ city
-        address_short = number +" " + street + ", "+ neighborhood
-        address_short = shorten(address_short)
 
-    a = [address, address_short]
-  return a
+
+#extend numeric with a cardinal function.
+class Numeric
+  def ordinal
+    cardinal = self.to_i.abs
+    if (10...20).include?(cardinal%100) then
+      cardinal.to_s << 'th'
+    else
+      cardinal.to_s << %w{th st nd rd th th th th th th}[cardinal % 10]
+    end
+  end
 end
+
+# string extension to check if a string is too long for tweeting
+class String
+  def toolong
+    if self.length > 140
+      return true
+    else
+      return false
+    end
+  end
+end
+
+
+
+def get_address(geodata)
+  return nil if geodata.nil?
+  geo = geodata[:coordinates].join(",")
+  puts "geolocation: " + geo
+  uri_for_google = "http://maps.googleapis.com/maps/api/geocode/json?latlng="+geo+"&sensor=true"
+  begin
+    data = Net::HTTP.get(URI.parse(uri_for_google))
+    result = JSON.parse(data)
+    number = result["results"][0]["address_components"][0]["short_name"]
+    street = result["results"][0]["address_components"][1]["short_name"]
+    neighborhood = result["results"][0]["address_components"][2]["short_name"]
+    city = result["results"][0]["address_components"][5]["short_name"]
+    address = number +" " + street + ", "+ neighborhood + ", "+ city
+    address_short = number +" " + street + ", "+ neighborhood
+    address_short = shorten(address_short)
+    return [address, address_short]
+  rescue Exception => e
+    puts "couldn't get address from google"
+    return nil      
+  end
+end
+
+
 
 def send_to_cakemix(data)
     begin
@@ -37,19 +62,21 @@ end
 
 
 def find_tags entities
+  #we need to add a list of tags used and add them to a relation map (and have a list of uncatched terms)
   tags = []
+
   if !entities[:hashtags].nil?
-    for entities[:hashtags]
-    tags < 
-  
+    return nil
   else
     return nil
   end
 end
+
 def find_url entities
+  #we need to add a list of img service providers (and have a list of uncatched terms)
   url = nil
   if entities[:urls] != [] && !entities[:urls].nil?
-    puts entities[:urls]
+    # puts entities[:urls]
     #for yfrog: Construct URL like <YOURURL>:iphone. For example, http://yfrog.com/0kratsj:iphone.
     urls = entities[:urls]
     if urls != []
@@ -69,65 +96,69 @@ end
 
 def find_media entities
   #for yfrog: Construct URL like <YOURURL>:iphone. For example, http://yfrog.com/0kratsj:iphone.
-  if !entities[:media].nil?
-    media_url = entities[:media][0]["media_url"]
-    if !media_url.nil? 
-      #if there is an image, store it in the server.
-      filename = media_url.split("/")[-1]
-      file_route = nil
-      # route = route.chomp("/")
-      # File.open(route+"/"+filename, 'wb') do |f|
-      #   f.write(open(media_url).read)
-      # end  
-      f = {"media_url" => media_url,"file_route" => file_route}  
-      puts "photo found: " + media_url       
-      return f
-    else
-      return nil
-    end
-  else
-    return nil
-  end
+  return nil if entities[:media].nil?
+  media_url = entities[:media][0]["media_url"]
+  return nil  if media_url.nil? 
+  #if there is an image, store it in the server.
+  filename = media_url.split("/")[-1]
+  file_route = nil
+  # route = route.chomp("/")
+  # File.open(route+"/"+filename, 'wb') do |f|
+  #   f.write(open(media_url).read)
+  # end  
+  f = {:media_url => media_url,:file_route => file_route}  
+  puts "photo found: " + media_url
+  return f
 end
 
 def find_plate text
   plate = nil
   re = /\b(\w{5,8})\s/
   plate = re.match(text)[1] unless !re.match(text)
-  if plate.nil? then puts "no plate found" 
-  else puts "found plate no: #{plate}" end
+  if plate.nil? 
+    puts "no plate found" 
+  else 
+    puts "found plate no: #{plate}" 
+  end
   return plate
 end
 
-def shorten (string, count = 50)
-	if string.length >= count
-		shortened = string[0, count]
-		splitted = shortened.split(/\s/)
-		words = splitted.length
-		if string[count].chr == " "
-	    splitted[0, words].join(" ")
-  	else
-		  splitted[0, words-1].join(" ")
-	  end
-	else 
-		string
-	end
+def shorten (string, count = 50, keeplast = false)
+  return string if string.length <= count
+  
+	if keeplast
+    last = string.split(' ')[-1]
+    shortened = string[0, count-last.length]
+  	splitted = shortened.split(' ')
+  	words = splitted.length
+		if string[count-last.length].chr == " "  then shorter = splitted[0, words].join(" ")
+  	else  shorter = splitted[0, words-1].join(" ") end
+		shorter << " #{last}"  
+	else
+    shortened = string[0, count]
+  	splitted = shortened.split(' ')
+  	words = splitted.length
+  	if string[count].chr == " " then splitted[0, words].join(" ")
+    else splitted[0, words-1].join(" ") end
+  end
 end
 
 
 t = Twitter.user_timeline({:count => 1})
 if t.nil? then l = nil else l = t[0]["created_at"] end
-if l.nil? then $last_time = Time.now- 60*10 else $last_time = Time.parse(l) end
+l = Time.parse(l) unless l.class == Time
+if l.nil? then $last_time = Time.now- 60*10 else $last_time = l end
 
-def send_tweet(options = {:status =>"nil", :options => nil})
+
+def send_tweet(status , options)
   
-  if Time.now - $last_time < 10 
-    puts "waiting 10 seconds before sending the next tweet"
-    sleep(10) 
+  if Time.now - $last_time < 5 
+    puts "waiting 5 seconds before sending the next tweet"
+    sleep 10 
   end
   begin
     if !status.nil?
-     Twitter.update(:status, :options)
+     Twitter.update(:status, :options)  unless SAFE
       puts "REPLIED: " +  status
       $last_time = Time.now 
     end
@@ -140,52 +171,142 @@ def send_tweet(options = {:status =>"nil", :options => nil})
 end
 
 
-
-
-
-
+def send_to_mongo (tweetdata)
+  #re-authorize credentials
+  auth = $db.authenticate("bkme","youwerebiked1")
+  puts "db authorized." if auth
+  if $reports.find(:tweet_id => tweetdata[:tweet_id]).none?
+    $reports.insert(tweetdata) unless SAFE
+    puts "RECORD ADDED"
+  else
+    $reports.update({:tweet_id => status_id}, tweetdata)  unless SAFE
+    puts "RECORD UPDATED"
+  end
+end
 
 ############################### MAIN FUNCTION ###############################
 
-def create_response user=nil, plate=nil, url=nil, geodata =nil address=[nil,nil], tags=nil
+def is_following user
+  if Twitter.user?(user)
+    Twitter.friendship($my_name, user)["target"]["following"]
+  else
+    false
+  end
+end
+
+def how_many(user)
+  how_many = {}
+  how_many[:hour] = 1
+  how_many[:day] = 1
+  how_many[:week] = 1 
+  how_many[:month] = 1  
+  how_many[:ever] =  $reports.find(:user_name => user).count() + 1
   
   
+  n = Time.now
+  lasthour = n - 60*60
+  lastday = n - 60*60*24
+  lastweek = n - 60*60*24*7
+  lastmonth = n - 60*60*24*30 
+
+  $reports.find(:user_name => user).each do |e|
+    t = e["created_at"]
+    t = Time.parse(t) unless t.class == Time
+    how_many[:hour] += 1 if t > lasthour
+    how_many[:day] += 1 if t > lastday
+    how_many[:week] += 1 if t > lastweek
+    how_many[:month] += 1 if t > lastmonth
+  end
   
+  if SAFE
+    how_many[:hour] = 1
+    how_many[:day] = 1
+    how_many[:week] = 1
+    how_many[:month] = 1 +rand(10)   
+    how_many[:ever] =  1 + how_many[:month] + rand(10)   
+  end
+
+  return how_many
+end
+
+
+def tweet_options(user_id, geodata)
+
   options = {}
   options[:in_reply_to_status_id]  = user_id 
   if !geodata.nil?
     options[:lat]= geodata[:coordinates][0]
     options[:long] = geodata[:coordinates][1]
   end
-  
-  if url.nil? and address[0].nil?
-    return 
-  
-  if !address[0].nil?
-      # generate the tweet
-      if !plate.nil? && !url.nil?
-        new_status = "@"+ user + " just got "+plate+" in the bikelane at "+address[0]+" "+ url + ". more to come soon"   
-        new_status_short = "@"+ user + " just got "+plate+" in the bikelane at "+address[1]+" "+ url + "."   
-      elsif !url.nil?
-        new_status = "@"+ user + " just got a car in the bikelane at " + address[0] + " " + url + ". follow me for updates."
-        new_status_short = "@"+ user + " just got a car in the bikelane at " + address[1] + " " + url + "."
-      else
-        new_status = ""  
-      end
-      # if status too long, use short status
-      if new_status.length > 140
-        new_status = new_status_short
-      end
-    elsif geodata.nil?
-        new_status = "sorry @"+ user + " I only process location-enabled reports. please activate it in your device."
-      else
-        new_status = "sorry @#{user}, there was a problem processing your address. Please "
-        address = nil
-      end
-    end #if geodata
-  else
-    puts "no photo, no tweet."
-  end #if media
+  return options
+end
 
 
+def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
+  
+  if user.nil? then return nil end
+  if url.nil? && geodata.nil? then return nil end
+  
+  nogeo = {}
+  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Make sure you have it activated in your twitter app. here is some info about it http://bit.ly/w1kirG "
+  nogeo["error"] = "sorry @#{user}, there was a problem processing your address. This doesn't happen often, don't let this stop you from GETTING more RIDES!"
+    
+  return nogeo["unknown"] if geodata.nil?
+  return nogeo["error"] if address.nil?
+  
+  how_many = how_many(user)
+  follows = is_following(user)
+  
+  got =   [ "@#{user} GOT some WHEELS at #{address[0]}.", 
+            "@#{user} GOT a RIDE at #{address[0]}.", 
+            "@#{user} GOT a WHIP at #{address[0]}."]
+  got_s = [ "@#{user} GOT some WHEELS at #{address[1]}.", 
+            "@#{user} GOT a RIDE at #{address[1]}.", 
+            "@#{user} GOT a WHIP at #{address[1]}."]
+  
+  
+  nth_hour = ["That's #{how_many[:hour]} in a row! Love BKME.ORG.",
+                "#{how_many[:hour]} in a row! you're on fire! Love BKME.ORG."]
+  nth_day = ["That's your #{how_many[:day].ordinal} in one day! Love BKME.ORG."]
+  nth_week = ["That's your #{how_many[:week].ordinal} of this week! Love BKME.ORG."]
+  nth_month = ["That's #{how_many[:month]} RIDES this month! Love BKME.ORG."] 
+  nth_ever =  ["That's #{how_many[:ever]} RIDES! Love BKME.ORG."]
+  first = ["Congrats on your 1st RIDE :) You're now part of BKME.ORG."]
+  
+  follow = ["Don't forget to follow @BKME_NY for updates.",
+            "Rememver to follow @BKME_NY."]
+  
+  r = rand(3)
+  if how_many[:hour] == 4 or how_many[:hour] == 6
+    response = "#{got[r]} #{nth_hour[1]} #{url}"
+    response = "#{got_s[r]} #{nth_hour[1]} #{url}" if response.toolong
+  elsif how_many[:hour] > 1
+    response = "#{got[r]} #{nth_hour[0]} #{url}"
+    response = "#{got_s[r]} #{nth_hour[0]} #{url}" if response.toolong
+  elsif how_many[:day] > 1
+    response = "#{got[r]} #{nth_day[0]} #{url}"
+    response = "#{got_s[r]} #{nth_day[0]} #{url}" if response.toolong
+  elsif how_many[:week] > 2
+    response = "#{got[r]} #{nth_week[0]} #{url}"
+    response = "#{got_s[r]} #{nth_week[0]} #{url}" if response.toolong
+  elsif how_many[:month] > 3
+    response = "#{got[r]} #{nth_month[0]} #{url}"
+    response = "#{got_s[r]} #{nth_month[0]} #{url}" if response.toolong
+  elsif how_many[:ever] > 1
+    response = "#{got[r]} #{nth_ever[0]} #{url}"
+    response = "#{got_s[r]} #{nth_ever[0]} #{url}" if response.toolong
+  elsif how_many[:ever] == 1
+    response = "#{got[r]} #{first[0]} #{url}"
+    response = "#{got_s[r]} #{first[0]} #{url}" if response.toolong
+  end
+  
+  if rand < 0.5 and !is_following(user) and !TEST
+    response = "#{got[r]} #{follow[0]} #{url}"
+    response = "#{got_s[r]} #{follow[0]} #{url}" if response.toolong
+  end
+
+  response = shorten(response,140,true) if response.toolong
+  puts response.length
+
+  return response    
 end
