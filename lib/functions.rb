@@ -234,6 +234,7 @@ def tweet_options(user_id, geodata)
 
   options = {}
   options[:in_reply_to_status_id]  = user_id 
+  options[:]
   if !geodata.nil?
     options[:lat]= geodata[:coordinates][0]
     options[:long] = geodata[:coordinates][1]
@@ -271,7 +272,7 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
   nth_week = ["That's your #{how_many[:week].ordinal} of this week! Love BKME.ORG."]
   nth_month = ["That's #{how_many[:month]} RIDES this month! Love BKME.ORG."] 
   nth_ever =  ["That's #{how_many[:ever]} RIDES! Love BKME.ORG."]
-  first = ["Congrats on your 1st RIDE :) You're now part of BKME.ORG."]
+  first = ["Congrats on your 1st GET :) You're now part of BKME.ORG."]
   
   follow = ["Don't forget to follow @BKME_NY for updates.",
             "Rememver to follow @BKME_NY."]
@@ -305,6 +306,7 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
     response = "#{got_s[r]} #{follow[0]} #{url}" if response.toolong
   end
 
+  #the messages should be less than 140 by now. this is a brute force shortener that keeps the url.
   response = shorten(response,140,true) if response.toolong
   puts response.length
 
