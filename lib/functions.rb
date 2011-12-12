@@ -234,7 +234,6 @@ def tweet_options(user_id, geodata)
 
   options = {}
   options[:in_reply_to_status_id]  = user_id 
-  options[:]
   if !geodata.nil?
     options[:lat]= geodata[:coordinates][0]
     options[:long] = geodata[:coordinates][1]
