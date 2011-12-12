@@ -1,5 +1,5 @@
 #global modes
-DEBUG = TRUE
+DEBUG = false
 SAFE = false
 TEST = false
 
