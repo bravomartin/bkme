@@ -89,7 +89,9 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   url = find_url(entities)
   tags = nil #get_tags(entities)
   #look for images
-  image_url = find_media(entities)
+  #image_url = find_media(entities)
+  file_url = find_file_url(entities)
+  filename = store_media(tweet_id, file_url)
 
   #keep going only if there is a photo in the report
   if url.nil? then puts "no url, next #{waiting}"; next end
@@ -97,7 +99,9 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   
   address = get_address(geodata)
   
-  begin# plate = find_plate(text)
+ # plate = find_plate(text)
+ 
+  
   response = create_response(user, url, geodata, address, tags)
 
   options = tweet_options(user_id, geodata)
@@ -105,34 +109,35 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   send_tweet(response, options) if !response.nil?
 
 
-    if geodata.nil? then puts "no geo, not stored #{waiting}"; next end
+  if geodata.nil? then puts "no geo, not stored #{waiting}"; next end
 
 
     
-    #store the data in the database
-    tweetdata = {}
-    tweetdata[:tweet_id] = status_id
-    tweetdata[:user_id] = user_id
-    tweetdata[:user_name] = user
-    tweetdata[:text] = text
-    tweetdata[:geolocation] = geodata[:coordinates].join(",")
-    tweetdata[:address] = address
-    tweetdata[:url] = url if !url.nil?
-      
-    if !image_url.nil?
-      tweetdata[:image_url] = image_url[:media_url]
-      tweetdata[:local_filename] = image_url[:file_route]
-    end
-    # tweetdata[:plate] = plate if !plate.nil?
-    tweetdata[:created_at] = created_at
-    tweetdata[:response] = status
-    
-    #send data to mongo
-    send_to_mongo(tweetdata)
+  #store the data in the database
+  tweetdata = {}
+  tweetdata[:tweet_id] = status_id
+  tweetdata[:user_id] = user_id
+  tweetdata[:user_name] = user
+  tweetdata[:text] = text
+  tweetdata[:geolocation] = geodata[:coordinates].join(",")
+  tweetdata[:address] = address
+  tweetdata[:url] = url if !url.nil?
+  tweetdata[:image_url] = image_url[:media_url]
+  tweetdata[:filename] = filename
+  tweetdata[:created_at] = created_at
+  tweetdata[:response] = status
+  
+  #send data to mongo
+  send_to_mongo(tweetdata)
 
-  rescue Exception => e
-    puts e.message
+  
+
   end
+
+
+
+
+
   
   puts waiting
 end
