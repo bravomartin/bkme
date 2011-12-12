@@ -3,9 +3,5 @@ $LOAD_PATH << './lib'
 require 'config'
 require 'functions'
 
-
-
-
-r = $reports.find_one(:tweet_id => 144793430734802945)
-
-puts r
+fileurl = "http://www.blogcdn.com/blog.moviefone.com/media/2011/01/fantastic-mr-fox1.jpg"
+AWS::S3::S3Object.store("test/lala.jpg", open(fileurl), 'img.bkme.org', :access => :public_read)
