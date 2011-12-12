@@ -15,7 +15,6 @@ $my_name = "bkme_ny"
 
 
 c_users = ["brvmrtn", "freddytruman", "lovelikerobots", "willgame", "omarzh", "rebelliouszpoet"]
-c_users = ["lovelikerobots", "willgame", "omarzh", "rebelliouszpoet"]
 
 c_users.each do |user|
 r = 5
