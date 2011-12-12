@@ -37,7 +37,7 @@ if !t.nil? then last_status = t[0]["text"] else last_status =  " " end
  
 track_terms = ['#bkme', '#BKME', '#Bkme', '@bkme_ny']
 
-track_terms = ['#test', "photo", "here", "now"] if TEST
+track_terms = ['#test', "photo","pic", "here", "now"] if TEST
 
 
 begin
@@ -96,9 +96,12 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   #look for images
   #image_url = find_media(entities)
   file_url = find_file_url(entities)
-  filename = store_media(tweet_id, file_url)
+  puts "got here..."
+  puts file_url
+  puts status_id
+  filename = store_media(status_id, file_url)
+  puts "got here too"
 
-  
   address = get_address(geodata)
   
  # plate = find_plate(text)

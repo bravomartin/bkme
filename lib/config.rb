@@ -22,7 +22,7 @@ require 'net/https'
 require 'JSON'
 require 'time'
 require 'aws/s3'
-require './lib/expurrel/expurrel'
+require './lib/expurrel'
 
 
 

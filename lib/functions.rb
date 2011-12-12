@@ -114,14 +114,14 @@ end
 
 
 def find_file_url entities
-  
+  services = ["yfrog", "twitter", "twitpic", "lockerz", "mobypicture", "twitgoo","posterous", "img.ly"]
+
   image_url = entities[:media][0]["media_url"] if !entities[:media].nil?
   url = find_url(entities)
-  
+
   fullurl = "http://"+url
   fullurl = expand_url(fullurl) if fullurl.include? "t.co"
   service = fullurl.split("/")[2]
-  
   if service.include? "lockerz"
     fileurl = "http://api.plixi.com/api/tpapi.svc/imagefromurl?url=#{fullurl}&size=big"
   elsif service.include? "pic.twitter.com"
@@ -135,6 +135,7 @@ def find_file_url entities
     Twitter.direct_message_create("brvmrtn", "problemas! don't know how to process #{service} images!") unless SAFE
     fileurl = "www.bkme.org/images/unknownphoto.jpg"
   end
+
   return fileurl
 end
 
@@ -149,9 +150,16 @@ def expand_url url
 end
   
 def store_media id, fileurl
-  filename = id.to_s+".jpg"  
+  begin
+  puts id
+  puts fileurl
+  filename = "gets/#{id.to_s}.jpg"
   AWS::S3::S3Object.store(filename, open(fileurl), 'img.bkme.org', :access => :public_read) unless SAFE
   return filename
+rescue Exception => e
+  puts e.message
+  puts e.backtrace
+end
 end
 
 
