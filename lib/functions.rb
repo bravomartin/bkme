@@ -98,18 +98,67 @@ def find_media entities
   #for yfrog: Construct URL like <YOURURL>:iphone. For example, http://yfrog.com/0kratsj:iphone.
   return nil if entities[:media].nil?
   media_url = entities[:media][0]["media_url"]
-  return nil  if media_url.nil? 
+  return nil if media_url.nil? 
   #if there is an image, store it in the server.
   filename = media_url.split("/")[-1]
   file_route = nil
   # route = route.chomp("/")
-  # File.open(route+"/"+filename, 'wb') do |f|
-  #   f.write(open(media_url).read)
-  # end  
+  #   File.open(route+"/"+filename, 'wb') do |f|
+  #     f.write(open(media_url).read)
+  #   end  
   f = {:media_url => media_url,:file_route => file_route}  
   puts "photo found: " + media_url
   return f
 end
+
+
+
+def find_file_url entities
+  
+  image_url = entities[:media][0]["media_url"] if !entities[:media].nil?
+  url = find_url(entities)
+  
+  fullurl = "http://"+url
+  fullurl = expand_url(fullurl) if fullurl.include? "t.co"
+  service = fullurl.split("/")[2]
+  
+  if service.include? "lockerz"
+    fileurl = "http://api.plixi.com/api/tpapi.svc/imagefromurl?url=#{fullurl}&size=big"
+  elsif service.include? "pic.twitter.com"
+    fileurl = image_url
+  elsif service.include? "twitpic.com"
+    doc = Nokogiri::HTML(open(fullurl))  
+    fileurl = doc.xpath('//img[@class="photo"]').first["src"]
+  elsif service.include? "yfrog"
+    fileurl = fullurl+":medium"
+  else
+    Twitter.direct_message_create("brvmrtn", "problemas! don't know how to process #{service} images!") unless SAFE
+    fileurl = "www.bkme.org/images/unknownphoto.jpg"
+  end
+  return fileurl
+end
+
+def expand_url url
+  e = Expurrel.new(url)
+  exp = e.decode
+  if exp != url and !exp.nil?
+    expand_url(exp)
+  else
+    return exp
+  end
+end
+  
+def store_media id, fileurl
+  filename = id.to_s+".jpg"  
+  AWS::S3::S3Object.store(filename, open(fileurl), 'img.bkme.org', :access => :public_read) unless SAFE
+  return filename
+end
+
+
+
+
+
+
 
 def find_plate text
   plate = nil
@@ -154,7 +203,7 @@ def send_tweet(status , options)
   
   if Time.now - $last_time < 5 
     puts "waiting 5 seconds before sending the next tweet"
-    sleep 10 
+    sleep 10 unless MIGRATE
   end
   begin
     if !status.nil?
@@ -173,16 +222,18 @@ end
 
 def send_to_mongo (tweetdata)
   #re-authorize credentials
-  auth = $db.authenticate("bkme","youwerebiked1")
+  auth = $db.authenticate(MONGO_USER,MONGO_PASS)
   puts "db authorized." if auth
   if $reports.find(:tweet_id => tweetdata[:tweet_id]).none?
     $reports.insert(tweetdata) unless SAFE
     puts "RECORD ADDED"
   else
-    $reports.update({:tweet_id => status_id}, tweetdata)  unless SAFE
+    r = $reports.find_one(:tweet_id => tweetdata[:tweet_id])
+    $reports.update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  unless SAFE
     puts "RECORD UPDATED"
   end
 end
+
 
 ############################### MAIN FUNCTION ###############################
 
@@ -218,7 +269,7 @@ def how_many(user)
     how_many[:month] += 1 if t > lastmonth
   end
   
-  if SAFE
+  if TEST
     how_many[:hour] = 1
     how_many[:day] = 1
     how_many[:week] = 1
@@ -229,6 +280,20 @@ def how_many(user)
   return how_many
 end
 
+def rel_date(date)
+  date = Date.parse(date, true) unless /Date.*/ =~ date.class.to_s
+  days = (date - Date.today).to_i
+  
+  return 'today'     if days >= 0 and days < 1
+  return 'tomorrow'  if days >= 1 and days < 2
+  return 'yesterday' if days >= -1 and days < 0
+  
+  return "in #{days} days"      if days.abs < 60 and days > 0
+  return "#{days.abs} days ago" if days.abs < 60 and days < 0
+  
+  return date.strftime('%A, %B %e') if days.abs < 182
+  return date.strftime('%A, %B %e, %Y')
+end
 
 def tweet_options(user_id, geodata)
 
@@ -242,7 +307,7 @@ def tweet_options(user_id, geodata)
 end
 
 
-def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
+def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
   
   if user.nil? then return nil end
   if url.nil? && geodata.nil? then return nil end
@@ -264,7 +329,6 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
             "@#{user} GOT a RIDE at #{address[1]}.", 
             "@#{user} GOT a WHIP at #{address[1]}."]
   
-  
   nth_hour = ["That's #{how_many[:hour]} in a row! Love BKME.ORG.",
                 "#{how_many[:hour]} in a row! you're on fire! Love BKME.ORG."]
   nth_day = ["That's your #{how_many[:day].ordinal} in one day! Love BKME.ORG."]
@@ -273,10 +337,21 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil)
   nth_ever =  ["That's #{how_many[:ever]} RIDES! Love BKME.ORG."]
   first = ["Congrats on your 1st GET :) You're now part of BKME.ORG."]
   
+
   follow = ["Don't forget to follow @BKME_NY for updates.",
             "Rememver to follow @BKME_NY."]
+  if recovered
+    t = Time.parse(created_at)
+    if t.strftime("%a") == Time.now.strftime("%a") then pre = "at"
+    else pre = t.strftime("%A") end
+    created = pre +" "+ t.strftime("%a %I:%M%p")
+    got = ["We just catched a GET from you #{created} at #{address[0]}"]
+    got_s = ["We just catched a GET from you #{created} at #{address[1]}"]
+  end
+
+  if recovered then r = 0 
+  else  r = rand(3) end
   
-  r = rand(3)
   if how_many[:hour] == 4 or how_many[:hour] == 6
     response = "#{got[r]} #{nth_hour[1]} #{url}"
     response = "#{got_s[r]} #{nth_hour[1]} #{url}" if response.toolong

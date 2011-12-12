@@ -1,34 +1,32 @@
 #global modes
-DEBUG = false
+DEBUG = TRUE
 SAFE = false
 TEST = false
 
-puts "***Running in safe mode, nothing will be actually stored or sent***" if SAFE
-puts "***Running in debug mode, using @bkmetst credentials***" if DEBUG
-puts "***Running a test with random values and keywords***" if TEST
+puts "*********************************************************************" if TEST or DEBUG or SAFE
+puts "*** Running in safe mode, nothing will be actually stored or sent ***" if SAFE
+puts "***       Running in debug mode, using @bkmetst credentials       ***" if DEBUG
+puts "***         Running a test with random values and keywords        ***" if TEST
+puts "*********************************************************************" if TEST or DEBUG or SAFE
 
 begin
 require 'rubygems'
 require 'tweetstream'
-#gem 'twitter',  '=1.7.2'
 require 'twitter'
 require 'mongo'
-
+require 'nokogiri'   
+require 'open-uri'
 
 require 'net/http'
 require 'net/https'
 require 'JSON'
 require 'time'
-
-#connect to AWS S3
-# AWS::S3::Base.establish_connection!(
-#     :access_key_id     => 'AKIAJQPOWZKALWX23IBQ',
-#     :secret_access_key => '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'
-#   )
+require 'aws/s3'
+require './lib/expurrel/expurrel'
 
 
-#connect to mongo
-  $db = Mongo::Connection.new("dbh84.mongolab.com", 27847).db("bkme")
+
+
 
 if DEBUG
   #bkmetst keys
@@ -43,10 +41,30 @@ else
   OAUTH_TOKEN = '397570607-vm9Se5BnZVkblyUNeJwsx1ftFMKQ4ftIlgMwpUpK'
   OAUTH_TOKEN_SECRET = 'Vf8tA3ujoVYTLmgr5reiDsDHCbEI40yRjMmij0JZO0'
 end
-
+  MONGO_USER = "bkme"
+  MONGO_PASS = "youwerebiked1"
+  AWS_ID = 'AKIAJQPOWZKALWX23IBQ'
+  AWS_SECRET = '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'
+  
+  
+  
+  
+  #connect to AWS S3
+  AWS::S3::Base.establish_connection!(
+      :access_key_id     => AWS_ID,
+      :secret_access_key => AWS_SECRET
+    )
+  
+  
+  
+  #connect to mongo
+  $db = Mongo::Connection.new("dbh84.mongolab.com", 27847).db("bkme")
+  
   #load collection to insert reports in
   $reports = $db.collection("records")
-  auth = $db.authenticate("bkme","youwerebiked1")
+  $flags = $db.collection("flags")
+
+  auth = $db.authenticate(MONGO_USER,MONGO_PASS)
   puts "Database authenticated successfully" if auth
 
 
