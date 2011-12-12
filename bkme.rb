@@ -87,15 +87,17 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
 
   #look for urls
   url = find_url(entities)
+
+  #keep going only if there is a photo in the report
+  if url.nil? then puts "no url, next #{waiting}"; next end
+
+
   tags = nil #get_tags(entities)
   #look for images
   #image_url = find_media(entities)
   file_url = find_file_url(entities)
   filename = store_media(tweet_id, file_url)
 
-  #keep going only if there is a photo in the report
-  if url.nil? then puts "no url, next #{waiting}"; next end
-    
   
   address = get_address(geodata)
   
@@ -129,14 +131,6 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   
   #send data to mongo
   send_to_mongo(tweetdata)
-
-  
-
-  end
-
-
-
-
 
   
   puts waiting
