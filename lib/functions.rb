@@ -402,13 +402,13 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   end
   
   if rand < 0 and !is_following(user) and !TEST
-    response = "#{got[r]} #{follow[0]} #{bkurl}"
-    response = "#{got_s[r]} #{follow[0]} #{bkurl}" if response.toolong
+    response = "#{got[r]} #{follow[0]}"
+    response = "#{got_s[r]} #{follow[0]}" if response.toolong
   end
 
   #the messages should be less than 119 by now. this is a brute force shortener.
   response = shorten(response,119) if response.toolong
   puts response.length
 
-  return response    
+  return response+" "+bkurl
 end
