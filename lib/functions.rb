@@ -15,7 +15,7 @@ end
 # string extension to check if a string is too long for tweeting
 class String
   def toolong
-    if self.length > 140
+    if self.length > 119
       return true
     else
       return false
@@ -90,7 +90,6 @@ def find_url entities
   elsif !entities[:media].nil?
     url = entities[:media][0]["display_url"]
   end
-  if !url.nil? then puts "url found: " + url end
   return url
 end
 
@@ -114,29 +113,45 @@ end
 
 
 def find_file_url entities
-  services = ["yfrog", "twitter", "twitpic", "lockerz", "mobypicture", "twitgoo","posterous", "img.ly"]
+  begin
+  services = ["yfrog", "pic.twitter.com", "twitpic", "lockerz.com", "mobypicture.com", "twitgoo","posterous", "img.ly"]
 
   image_url = entities[:media][0]["media_url"] if !entities[:media].nil?
   url = find_url(entities)
 
   fullurl = "http://"+url
   fullurl = expand_url(fullurl) if fullurl.include? "t.co"
-  service = fullurl.split("/")[2]
+  service = url.split("/")[0]
+  # if !services.to_s.include? service
+  #   
+  #   Twitter.direct_message_create(ADMIN, service + " not in my list!") unless SAFE or DEBUG
+  #   puts service + " not in my list!"
+  #   return nil
+  # end
+  
+  fileurl = nil
   if service.include? "lockerz"
     fileurl = "http://api.plixi.com/api/tpapi.svc/imagefromurl?url=#{fullurl}&size=big"
   elsif service.include? "pic.twitter.com"
-    fileurl = image_url
+    fileurl = image_url if defined? image_url
   elsif service.include? "twitpic.com"
     doc = Nokogiri::HTML(open(fullurl))  
     fileurl = doc.xpath('//img[@class="photo"]').first["src"]
   elsif service.include? "yfrog"
     fileurl = fullurl+":medium"
-  else
-    Twitter.direct_message_create("brvmrtn", "problemas! don't know how to process #{service} images!") unless SAFE
-    fileurl = "www.bkme.org/images/unknownphoto.jpg"
   end
-
+  if fileurl.nil?
+    problemas = "problemas! don't know how to process #{service} images!"
+    Twitter.direct_message_create(ADMIN, problemas) unless SAFE or DEBUG
+    puts problemas
+    fileurl = -1
+  end
   return fileurl
+  
+  rescue Exception => e
+    puts e.message
+    puts e.backtrace
+  end  
 end
 
 def expand_url url
@@ -150,22 +165,16 @@ def expand_url url
 end
   
 def store_media id, fileurl
-  begin
-  puts id
-  puts fileurl
-  filename = "gets/#{id.to_s}.jpg"
-  AWS::S3::S3Object.store(filename, open(fileurl), 'img.bkme.org', :access => :public_read) unless SAFE
+  unless fileurl.nil? or fileurl == -1
+    filename = "gets/#{id.to_s}.jpg" unless DEBUG
+    filename = "test/#{id.to_s}.jpg" if DEBUG
+    AWS::S3::S3Object.store(filename, open(fileurl), 'img.bkme.org', :access => :public_read) unless SAFE
+  else
+    puts "ERROR!!!" 
+    filename = nil
+  end
   return filename
-rescue Exception => e
-  puts e.message
-  puts e.backtrace
 end
-end
-
-
-
-
-
 
 
 def find_plate text
@@ -215,7 +224,7 @@ def send_tweet(status , options)
   end
   begin
     if !status.nil?
-     Twitter.update(:status, :options)  unless SAFE
+     Twitter.update(status, options)  unless SAFE or TEST
       puts "REPLIED: " +  status
       $last_time = Time.now 
     end
@@ -229,21 +238,28 @@ end
 
 
 def send_to_mongo (tweetdata)
+  begin
   #re-authorize credentials
   auth = $db.authenticate(MONGO_USER,MONGO_PASS)
   puts "db authorized." if auth
   if $reports.find(:tweet_id => tweetdata[:tweet_id]).none?
-    $reports.insert(tweetdata) unless SAFE
+    $reports.insert(tweetdata) unless SAFE or DEBUG
+    test = $db.collection("test")
+    test.insert(tweetdata) if DEBUG
     puts "RECORD ADDED"
   else
     r = $reports.find_one(:tweet_id => tweetdata[:tweet_id])
-    $reports.update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  unless SAFE
+    $reports.update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  unless SAFE or DEBUG
+    $db.collection("test").update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  if DEBUG
     puts "RECORD UPDATED"
+  end
+  rescue Exception => e
+    puts e.message
+    puts e.backtrace
   end
 end
 
 
-############################### MAIN FUNCTION ###############################
 
 def is_following user
   if Twitter.user?(user)
@@ -315,7 +331,9 @@ def tweet_options(user_id, geodata)
 end
 
 
-def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
+def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
+  
+  bkurl = "http://BKME.ORG/get/#{status_id}"
   
   if user.nil? then return nil end
   if url.nil? && geodata.nil? then return nil end
@@ -337,17 +355,17 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil, reco
             "@#{user} GOT a RIDE at #{address[1]}.", 
             "@#{user} GOT a WHIP at #{address[1]}."]
   
-  nth_hour = ["That's #{how_many[:hour]} in a row! Love BKME.ORG.",
-                "#{how_many[:hour]} in a row! you're on fire! Love BKME.ORG."]
-  nth_day = ["That's your #{how_many[:day].ordinal} in one day! Love BKME.ORG."]
-  nth_week = ["That's your #{how_many[:week].ordinal} of this week! Love BKME.ORG."]
-  nth_month = ["That's #{how_many[:month]} RIDES this month! Love BKME.ORG."] 
-  nth_ever =  ["That's #{how_many[:ever]} RIDES! Love BKME.ORG."]
-  first = ["Congrats on your 1st GET :) You're now part of BKME.ORG."]
+  nth_hour = ["That's #{how_many[:hour]} in a row!",
+                "#{how_many[:hour]} in a row! you're on fire!"]
+  nth_day = ["That's your #{how_many[:day].ordinal} in one day!"]
+  nth_week = ["That's your #{how_many[:week].ordinal} of this week!"]
+  nth_month = ["That's #{how_many[:month]} RIDES this month!"] 
+  nth_ever =  ["That's #{how_many[:ever]} RIDES!"]
+  first = ["Congrats on your 1st GET :) You're now one of us."]
   
 
   follow = ["Don't forget to follow @BKME_NY for updates.",
-            "Rememver to follow @BKME_NY."]
+            "Remember to follow @BKME_NY."]
   if recovered
     t = Time.parse(created_at)
     if t.strftime("%a") == Time.now.strftime("%a") then pre = "at"
@@ -361,35 +379,35 @@ def create_response(user=nil, url=nil, geodata =nil, address=nil, tags=nil, reco
   else  r = rand(3) end
   
   if how_many[:hour] == 4 or how_many[:hour] == 6
-    response = "#{got[r]} #{nth_hour[1]} #{url}"
-    response = "#{got_s[r]} #{nth_hour[1]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_hour[1]}"
+    response = "#{got_s[r]} #{nth_hour[1]}" if response.toolong
   elsif how_many[:hour] > 1
-    response = "#{got[r]} #{nth_hour[0]} #{url}"
-    response = "#{got_s[r]} #{nth_hour[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_hour[0]}"
+    response = "#{got_s[r]} #{nth_hour[0]}" if response.toolong
   elsif how_many[:day] > 1
-    response = "#{got[r]} #{nth_day[0]} #{url}"
-    response = "#{got_s[r]} #{nth_day[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_day[0]}"
+    response = "#{got_s[r]} #{nth_day[0]}" if response.toolong
   elsif how_many[:week] > 2
-    response = "#{got[r]} #{nth_week[0]} #{url}"
-    response = "#{got_s[r]} #{nth_week[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_week[0]}"
+    response = "#{got_s[r]} #{nth_week[0]}" if response.toolong
   elsif how_many[:month] > 3
-    response = "#{got[r]} #{nth_month[0]} #{url}"
-    response = "#{got_s[r]} #{nth_month[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_month[0]}"
+    response = "#{got_s[r]} #{nth_month[0]}" if response.toolong
   elsif how_many[:ever] > 1
-    response = "#{got[r]} #{nth_ever[0]} #{url}"
-    response = "#{got_s[r]} #{nth_ever[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{nth_ever[0]}"
+    response = "#{got_s[r]} #{nth_ever[0]}" if response.toolong
   elsif how_many[:ever] == 1
-    response = "#{got[r]} #{first[0]} #{url}"
-    response = "#{got_s[r]} #{first[0]} #{url}" if response.toolong
+    response = "#{got[r]} #{first[0]}"
+    response = "#{got_s[r]} #{first[0]}" if response.toolong
   end
   
-  if rand < 0.5 and !is_following(user) and !TEST
-    response = "#{got[r]} #{follow[0]} #{url}"
-    response = "#{got_s[r]} #{follow[0]} #{url}" if response.toolong
+  if rand < 0 and !is_following(user) and !TEST
+    response = "#{got[r]} #{follow[0]} #{bkurl}"
+    response = "#{got_s[r]} #{follow[0]} #{bkurl}" if response.toolong
   end
 
-  #the messages should be less than 140 by now. this is a brute force shortener that keeps the url.
-  response = shorten(response,140,true) if response.toolong
+  #the messages should be less than 119 by now. this is a brute force shortener.
+  response = shorten(response,119) if response.toolong
   puts response.length
 
   return response    

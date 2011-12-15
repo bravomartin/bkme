@@ -4,3 +4,4 @@ reports/**/*
 _OLD/**/*
 _OLD
 bkme.tmproj
+lib/credentials.rb

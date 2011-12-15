@@ -7,7 +7,7 @@
 # Bundler.require
  
  
-waiting = "\nwaiting for a new #bkme...\n\n"
+waiting = "\nwaiting for a new GET...\n\n"
 retries = 0
 last = Time.now
 
@@ -36,21 +36,20 @@ if !t.nil? then last_status = t[0]["text"] else last_status =  " " end
  puts "last tweet: " + last_status unless last_status == " "
  
 track_terms = ['#bkme', '#BKME', '#Bkme', '@bkme_ny']
-
 track_terms = ['#test', "photo","pic", "here", "now"] if TEST
 
 
 begin
-  back = "Back on track! get me some cars, amigo..."
+  back = "Back on track! GET me some cars, amigo..."
   if back != last_status
     Twitter.update(back) unless SAFE
     puts back
   else
-    puts "I didnt send the message, but still get me some cars, amigo..."
+    puts "I didnt send the message, but still GET me some cars, amigo..."
   end
 rescue Exception => e
   puts e.inspect
-  puts "I coudn't send the message, but still get me some cars, amigo..."
+  puts "I coudn't send the message, but still GET me some cars, amigo..."
 end
 
 begin
@@ -89,25 +88,23 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   url = find_url(entities)
 
   #keep going only if there is a photo in the report
-  if url.nil? then puts "no url, next #{waiting}"; next end
+  if url.nil? then puts "no url, next #{waiting}"; next 
+  else  puts "url found: " + url end
 
 
   tags = nil #get_tags(entities)
   #look for images
   #image_url = find_media(entities)
   file_url = find_file_url(entities)
-  puts "got here..."
-  puts file_url
-  puts status_id
-  filename = store_media(status_id, file_url)
-  puts "got here too"
+  if file_url.nil? then puts "no image, next #{waiting}"; next end
 
+  filename = store_media(status_id, file_url)  
   address = get_address(geodata)
   
  # plate = find_plate(text)
  
   
-  response = create_response(user, url, geodata, address, tags)
+  response = create_response(user,status_id, url, geodata, address, tags)
 
   options = tweet_options(user_id, geodata)
 
@@ -131,6 +128,7 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   tweetdata[:filename] = filename
   tweetdata[:created_at] = created_at
   tweetdata[:response] = status
+  tweetdata[:verified] = -1
   
   #send data to mongo
   send_to_mongo(tweetdata)
@@ -154,7 +152,7 @@ rescue Exception => e
     last = Time.now
     retry
   else 
-  Twitter.direct_message_create("brvmrtn", "problemas! #{e.message}"[0,140]) unless SAFE
+  Twitter.direct_message_create(ADMIN, "problemas! #{e.message}"[0,140]) unless SAFE
     puts "Asking for help!"
   end
 end
