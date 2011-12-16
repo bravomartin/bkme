@@ -3,7 +3,7 @@
 $LOAD_PATH << './lib'
 $LOAD_PATH << './'
 
-  DEBUG = false
+  DEBUG = true
   SAFE = false
   TEST = false
   ADMIN = "brvmrtn"
@@ -20,9 +20,8 @@ require 'tweetstream'
 require 'twitter'
 require 'mongo'
 require 'nokogiri'   
-require 'open-uri'
-require 'oauth'
 
+require 'open-uri'
 require 'net/http'
 require 'net/https'
 require 'JSON'
@@ -46,7 +45,9 @@ require 'credentials'
   
   #load collection to insert reports in
   $reports = $db.collection("records")
+  $reports = $db.collection("test") if DEBUG
   $flags = $db.collection("flags")
+  
 
   auth = $db.authenticate(MONGO_USER,MONGO_PASS)
   puts "Database authenticated successfully" if auth
