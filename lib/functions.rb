@@ -333,7 +333,6 @@ end
 
 
 def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
-  begin
   bkurl = "http://BKME.ORG/get/#{status_id}"
   
   if user.nil? then return nil end
@@ -415,9 +414,6 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   response = shorten(response,119) if response.toolong
 
   return response+" "+bkurl
-  rescue Exception => e
-    puts e.message
-    puts e.backtrace
-  end
+
   
 end

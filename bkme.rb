@@ -116,7 +116,6 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
 
   if geodata.nil? then puts "no geo, not stored #{waiting}"; next end
 
-  begin
     
   #store the data in the database
   tweetdata = {}
@@ -137,10 +136,7 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   #send data to mongo
   send_to_mongo(tweetdata)
 
-  rescue Exception => e
-    puts e.message
-    puts e.backtrace
-  end
+
 
 
   puts waiting
