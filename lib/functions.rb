@@ -40,6 +40,7 @@ def get_address(geodata)
     address = number +" " + street + ", "+ neighborhood + ", "+ city
     address_short = number +" " + street + ", "+ neighborhood
     address_short = shorten(address_short)
+    puts "address: " + address
     return [address, address_short]
   rescue Exception => e
     puts "couldn't get address from google"
@@ -146,12 +147,13 @@ def find_file_url entities
     puts problemas
     fileurl = -1
   end
+
   return fileurl
-  
-  rescue Exception => e
-    puts e.message
-    puts e.backtrace
-  end  
+rescue Exception => e
+  puts e.message
+  puts e.backtrace
+end  
+
 end
 
 def expand_url url
@@ -220,7 +222,7 @@ def send_tweet(status , options)
   
   if Time.now - $last_time < 5 
     puts "waiting 5 seconds before sending the next tweet"
-    sleep 10 unless MIGRATE
+    sleep 5
   end
   begin
     if !status.nil?
@@ -242,15 +244,14 @@ def send_to_mongo (tweetdata)
   #re-authorize credentials
   auth = $db.authenticate(MONGO_USER,MONGO_PASS)
   puts "db authorized." if auth
-  if $reports.find(:tweet_id => tweetdata[:tweet_id]).none?
+  if $reports.find("tweet_id" => tweetdata[:tweet_id]).none?
     $reports.insert(tweetdata) unless SAFE or DEBUG
     test = $db.collection("test")
     test.insert(tweetdata) if DEBUG
     puts "RECORD ADDED"
   else
-    r = $reports.find_one(:tweet_id => tweetdata[:tweet_id])
-    $reports.update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  unless SAFE or DEBUG
-    $db.collection("test").update({:tweet_id => tweetdata[:tweet_id]}, tweetdata)  if DEBUG
+    $reports.update({"tweet_id" => tweetdata[:tweet_id]}, tweetdata)  unless SAFE or DEBUG
+    $db.collection("test").update({"tweet_id" => tweetdata[:tweet_id]}, tweetdata)  if DEBUG
     puts "RECORD UPDATED"
   end
   rescue Exception => e
@@ -332,16 +333,20 @@ end
 
 
 def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
-  
+  begin
   bkurl = "http://BKME.ORG/get/#{status_id}"
   
   if user.nil? then return nil end
   if url.nil? && geodata.nil? then return nil end
   
   nogeo = {}
-  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Make sure you have it activated in your twitter app. here is some info about it http://bit.ly/w1kirG "
+  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Is it activated in your twitter app. here is some info about it http://bit.ly/w1kirG"
   nogeo["error"] = "sorry @#{user}, there was a problem processing your address. This doesn't happen often, don't let this stop you from GETTING more RIDES!"
-    
+
+  nogeo.each do |k,m|
+    nogeo[k] = shorten(m,140, true) if m.toolong
+  end
+  
   return nogeo["unknown"] if geodata.nil?
   return nogeo["error"] if address.nil?
   
@@ -408,7 +413,11 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
 
   #the messages should be less than 119 by now. this is a brute force shortener.
   response = shorten(response,119) if response.toolong
-  puts response.length
 
   return response+" "+bkurl
+  rescue Exception => e
+    puts e.message
+    puts e.backtrace
+  end
+  
 end

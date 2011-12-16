@@ -37,6 +37,7 @@ if !t.nil? then last_status = t[0]["text"] else last_status =  " " end
  
 track_terms = ['#bkme', '#BKME', '#Bkme', '@bkme_ny']
 track_terms = ['#test', "photo","pic", "here", "now"] if TEST
+track_terms = ['#test'] if DEBUG
 
 
 begin
@@ -104,16 +105,18 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
  # plate = find_plate(text)
  
   
-  response = create_response(user,status_id, url, geodata, address, tags)
-
+  response = create_response(user,status_id, url, geodata, address)
   options = tweet_options(user_id, geodata)
 
-  send_tweet(response, options) if !response.nil?
-
+  if !response.nil?
+    send_tweet(response, options)
+  else
+    puts "error!!"
+  end
 
   if geodata.nil? then puts "no geo, not stored #{waiting}"; next end
 
-
+  begin
     
   #store the data in the database
   tweetdata = {}
@@ -122,18 +125,24 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   tweetdata[:user_name] = user
   tweetdata[:text] = text
   tweetdata[:geolocation] = geodata[:coordinates].join(",")
+  tweetdata[:geo] = geodata[:coordinates]
   tweetdata[:address] = address
   tweetdata[:url] = url if !url.nil?
-  tweetdata[:image_url] = image_url[:media_url]
   tweetdata[:filename] = filename
-  tweetdata[:created_at] = created_at
+  tweetdata[:created_at] = Time.parse(created_at)
+  tweetdata[:created_at_i] = Time.parse(created_at).to_i
   tweetdata[:response] = status
   tweetdata[:verified] = -1
   
   #send data to mongo
   send_to_mongo(tweetdata)
 
-  
+  rescue Exception => e
+    puts e.message
+    puts e.backtrace
+  end
+
+
   puts waiting
 end
 
@@ -143,7 +152,7 @@ rescue Interrupt => e
 rescue Exception => e
   puts "somewhere else"
   puts e.message
-  retries = 0 if last < Time.now-60*60
+  retries = 1 if last < Time.now-60*60
   if retries < 5
     retries += 1 if last > Time.now-60*10
     sleep 15*retries

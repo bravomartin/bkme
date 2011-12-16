@@ -15,13 +15,16 @@ $my_name = "bkme_ny"
 
 
 c_users = ["brvmrtn", "freddytruman", "lovelikerobots", "willgame", "omarzh", "rebelliouszpoet"]
+user = "lovelikerobots"
 
-c_users.each do |user|
+# c_users.each do |user|
+2.times do |n|
+n +=1
 r = 5
 begin
   
   
-tweets = Twitter.user_timeline(user, options={:include_entities => true, :count =>200})
+tweets = Twitter.user_timeline(user, options={:include_entities => true, :count =>200, :page =>n})
 rescue Exception =>e
   sleep 4
   if r > 0
@@ -33,6 +36,8 @@ end
 puts "getting tweets from #{user}"
 
 tweets.each do |twitterobject|
+
+
   status =  twitterobject.attrs
   status_id = status["id"]
   text = status["text"]
@@ -83,11 +88,14 @@ tweets.each do |twitterobject|
   tweetdata[:user_name] = user
   tweetdata[:text] = text
   tweetdata[:geolocation] = geodata[:coordinates].join(",")
+  tweetdata[:geo] = geodata[:coordinates]
   tweetdata[:address] = address
   tweetdata[:url] = url if !url.nil?
   tweetdata[:filename] = filename
-  tweetdata[:created_at] = created_at
+  tweetdata[:created_at] = Time.parse(created_at)
+  tweetdata[:created_at_i] = Time.parse(created_at).to_i
   tweetdata[:response] = status
+  tweetdata[:verified] = -1
 
   #send data to mongo
   send_to_mongo(tweetdata)

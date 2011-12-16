@@ -20,11 +20,14 @@ require 'functions'
 users = {}
 
 
-tweets = Twitter.search("#bkme")
+tweets = Twitter.search("#bkme", options={:include_entities => true, :count =>200})
 
   tweets.each do |twitterobject|
+  
+  
+  
     status =  twitterobject.attrs
-    user = status["user"]["screen_name"]
+    user = status["from_user"]
     status_id = status["id"]
     text = status["text"]
 
@@ -60,17 +63,14 @@ tweets = Twitter.search("#bkme")
 
     # plate = find_plate(text)
 
-    response = create_response(user, url, geodata, address, tags, recovered = true, created_at)
+    response = create_response(user, status_id, url, geodata, address, tags, recovered = true, created_at)
     
     if !users.key?(user)
       users[user] = 1
-      send_tweet(new_status,options)
+      send_tweet(response,options)
       
     else
       users[user] +=1
-      if users[user] == 2
-        send_tweet(new_status,options)
-      end
     end
     
     options = tweet_options(user_id, geodata)
@@ -86,11 +86,14 @@ tweets = Twitter.search("#bkme")
     tweetdata[:user_name] = user
     tweetdata[:text] = text
     tweetdata[:geolocation] = geodata[:coordinates].join(",")
+    tweetdata[:geo] = geodata[:coordinates]
     tweetdata[:address] = address
     tweetdata[:url] = url if !url.nil?
     tweetdata[:filename] = filename
-    tweetdata[:created_at] = created_at
+    tweetdata[:created_at] = Time.parse(created_at)
+    tweetdata[:created_at_i] = Time.parse(created_at).to_i
     tweetdata[:response] = status
+    tweetdata[:verified] = -1
 
     #send data to mongo
     send_to_mongo(tweetdata)
@@ -110,7 +113,7 @@ tweets = Twitter.search("#bkme")
 
 
 users.each_pair do |k,v| 
-  if v > 3
+  if v > 2
     status = "@#{k} we indeed recovered #{v-1} more of your GETS  you (we won't flood you with mentions). Keep defending the bikelanes!" 
   else
     status = nil
