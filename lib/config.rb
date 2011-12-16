@@ -3,7 +3,7 @@
 $LOAD_PATH << './lib'
 $LOAD_PATH << './'
 
-  DEBUG = true
+  DEBUG = false
   SAFE = false
   TEST = false
   ADMIN = "brvmrtn"
