@@ -1,4 +1,5 @@
 .DS_Store
+Gemfile.lock
 reports
 reports/**/*
 _OLD/**/*

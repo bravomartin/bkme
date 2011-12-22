@@ -74,19 +74,6 @@ Twitter.configure do |config|
   
 end
 
-def prepare_access_token()
-  consumer = OAuth::Consumer.new(CONSUMER_KEY, CONSUMER_SECRET,
-    { :site => "http://www.twitter.com",
-      :scheme => :header
-    })
-  # now create the access token object from passed values
-  token_hash = { :oauth_token => OAUTH_TOKEN,
-                 :oauth_token_secret => OAUTH_TOKEN_SECRET
-               }
-  access_token = OAuth::AccessToken.from_hash(consumer, token_hash )
-  return access_token
-end
-
 
 
 rescue Exception => e

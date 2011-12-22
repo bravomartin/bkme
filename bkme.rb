@@ -39,20 +39,9 @@ track_terms = ['#bkme', '#BKME', '#Bkme', '@bkme_ny']
 track_terms = ['#test', "photo","pic", "here", "now"] if TEST
 track_terms = ['#test'] if DEBUG
 
-
-begin
-  back = "Back on track! GET me some cars, amigo..."
-  if back != last_status
-    Twitter.update(back) unless SAFE
-    puts back
-  else
-    puts "I didnt send the message, but still GET me some cars, amigo..."
-  end
-rescue Exception => e
-  puts e.inspect
-  puts "I coudn't send the message, but still GET me some cars, amigo..."
-end
-
+back = "Back on track! GET me some cars, amigo..."
+puts back
+  
 begin
 
 puts waiting 

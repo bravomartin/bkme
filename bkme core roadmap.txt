@@ -1,12 +1,6 @@
 to run once
 program for transfering cakemix to mongo
 
-to run periodically
-program for periodically look for images within img sharing sites.
-	get the posts without that data already taken
-	get the img url, store it somewhere
-	add link to the original image to existing entry
-	add link to stored image to existing entry
 
 
 to run all the time
@@ -15,6 +9,13 @@ X wait for tweet matching #bkme
 X	check if it has an image #stop
 X	check if it has geolocation 
 X		#stop and send instructions
+
+X	look for images within img sharing sites.
+X		get the posts without that data already taken
+X		get the img url, store it somewhere => AWS
+X		add link to the original image to existing entry
+X		add link to stored image to existing entry
+
 X	get the address
 X	generate the tweet and send.
 	
@@ -31,7 +32,7 @@ x			url
 x			media_url
 x			local_filename
 x			entire response
-			
+	
 		
 run periodically or after a crush	
 secondary loop to search api
