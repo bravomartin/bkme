@@ -1,0 +1,60 @@
+ToDo
+
+make program into a class
+run as a daemon
+run in heroku as a dyno
+
+
+get tags functions
+create a replies as a class or something easily editable (external files?)
+
+send one of the sorry responses if picture but not geo
+recognize source app and respond with instructions for that app
+
+improve responses. make day week and month to reset every 1s day (or change wording)
+
+run periodically or after a crush	
+secondary loop to search api
+	check if tweet was already collected #stop
+		repeat process of scraping the information from it
+		send a different message to user: sorry we were off but we didn't miss it (or something like that)
+		store it in the database.
+find all possible error messages and create responses.
+
+
+
+to run once
+X program for transfering cakemix to mongo
+
+to run all the time
+X program for streaming using mongo
+X wait for tweet matching #bkme
+X	check if it has an image #stop
+X	check if it has geolocation 
+X		#stop and send instructions
+
+X	look for images within img sharing sites.
+X		get the posts without that data already taken
+X		get the img url, store it somewhere => AWS
+X		add link to the original image to existing entry
+X		add link to stored image to existing entry
+
+X	get the address
+X	generate the tweet and send.
+	
+X	send data to database
+x		including:
+x			tweet unique id
+x			user_id
+x			user name
+x			text
+x			geolocation
+x			address
+x			created at
+x			url
+x			media_url
+x			local_filename
+x			entire response
+	
+		
+		

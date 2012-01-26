@@ -333,13 +333,13 @@ end
 
 
 def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil, tags=nil, recovered = false, created_at=nil)
-  bkurl = "http://BKME.ORG/get/#{status_id}"
+  bkmeurl = "http://BKME.ORG/get/#{status_id}"
   
   if user.nil? then return nil end
   if url.nil? && geodata.nil? then return nil end
   
   nogeo = {}
-  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Is it activated in your twitter app. here is some info about it http://bit.ly/w1kirG"
+  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Is it activated on the app and the tweet? here is some info about it http://bit.ly/w1kirG"
   nogeo["error"] = "sorry @#{user}, there was a problem processing your address. This doesn't happen often, don't let this stop you from GETTING more RIDES!"
 
   nogeo.each do |k,m|
@@ -413,7 +413,7 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   #the messages should be less than 119 by now. this is a brute force shortener.
   response = shorten(response,119) if response.toolong
 
-  return response+" "+bkurl
+  return response+" "+bkmeurl
 
   
 end

@@ -63,7 +63,7 @@ tweets = Twitter.search("#bkme", options={:include_entities => true, :count =>20
 
     # plate = find_plate(text)
 
-    response = create_response(user, status_id, url, geodata, address, tags, recovered = true, created_at)
+    response = create_response(user, status_id, url, geodata, address, tags, true, created_at)
     
     if !users.key?(user)
       users[user] = 1
@@ -99,17 +99,7 @@ tweets = Twitter.search("#bkme", options={:include_entities => true, :count =>20
     send_to_mongo(tweetdata)
     
 
-
-
   end
-
-
-
-
-
-
-          
-
 
 
 users.each_pair do |k,v| 

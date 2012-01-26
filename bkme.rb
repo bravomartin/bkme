@@ -121,7 +121,7 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   tweetdata[:created_at_i] = Time.parse(created_at).to_i
   tweetdata[:response] = status
   tweetdata[:verified] = -1
-  
+
   #send data to mongo
   send_to_mongo(tweetdata)
 
