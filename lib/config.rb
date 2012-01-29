@@ -4,8 +4,8 @@ $LOAD_PATH << './lib'
 $LOAD_PATH << './'
 
   DEBUG = false
-  SAFE = false
-  TEST = false
+  SAFE = true
+  TEST = true
   ADMIN = "brvmrtn"
 
 puts "*********************************************************************" if TEST or DEBUG or SAFE
@@ -27,7 +27,7 @@ require 'net/https'
 require 'JSON'
 require 'time'
 require 'aws/s3'
-require './lib/expurrel'
+require LOCALPATH+'/lib/expurrel'
   
   
 require 'credentials'
