@@ -53,6 +53,7 @@ PLATFORMS
 DEPENDENCIES
   aws-s3
   bson_ext
+  daemons
   json
   mongo
   nokogiri

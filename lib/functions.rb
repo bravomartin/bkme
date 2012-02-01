@@ -37,11 +37,13 @@ def get_address(geodata)
     street = result["results"][0]["address_components"][1]["short_name"]
     neighborhood = result["results"][0]["address_components"][2]["short_name"]
     city = result["results"][0]["address_components"][5]["short_name"]
+    puts city
     address = number +" " + street + ", "+ neighborhood + ", "+ city
     address_short = number +" " + street + ", "+ neighborhood
     address_short = shorten(address_short)
+    area = neighborhood + ", "+ city
     puts "address: " + address
-    return [address, address_short]
+    return [address, address_short,area]
   rescue Exception => e
     puts "couldn't get address from google"
     return nil      
@@ -280,10 +282,12 @@ def how_many(user)
   
   
   n = Time.now
+  wday = (n.wday == 0) ? 7 : n.wday
+  hour = n.hour+1
   lasthour = n - 60*60
   lastday = n - 60*60*24
-  lastweek = n - 60*60*24*7
-  lastmonth = n - 60*60*24*30 
+  lastweek = n - 60*60*hour*wday
+  lastmonth = n - 60*60*hour*n.day 
 
   $reports.find(:user_name => user).each do |e|
     t = e["created_at"]
@@ -339,7 +343,7 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   if url.nil? && geodata.nil? then return nil end
   
   nogeo = {}
-  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Is it activated on the app and the tweet? here is some info about it http://bit.ly/w1kirG"
+  nogeo["unknown"] = "Sorry @#{user} we can't get your location! Is it activated on the app and the tweet? Learn here how http://bkme.org/faq#geolocation"
   nogeo["error"] = "sorry @#{user}, there was a problem processing your address. This doesn't happen often, don't let this stop you from GETTING more RIDES!"
 
   nogeo.each do |k,m|
@@ -352,17 +356,22 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   how_many = how_many(user)
   follows = is_following(user)
   
-  got =   [ "@#{user} GOT some WHEELS at #{address[0]}.", 
-            "@#{user} GOT a RIDE at #{address[0]}.", 
-            "@#{user} GOT a WHIP at #{address[0]}."]
-  got_s = [ "@#{user} GOT some WHEELS at #{address[1]}.", 
-            "@#{user} GOT a RIDE at #{address[1]}.", 
-            "@#{user} GOT a WHIP at #{address[1]}."]
+  got =   [ ".@#{user} GOT one at #{address[0]}.", 
+            ".@#{user} GOT a RIDE at #{address[0]}.", 
+            ".@#{user} GOT a WHIP at #{address[0]}."]
+  got_s = [ ".@#{user} GOT one at #{address[1]}.", 
+            ".@#{user} GOT a RIDE at #{address[1]}.", 
+            ".@#{user} GOT a WHIP at #{address[1]}."]
+  got_a = [ ".@#{user} GOT one in #{address[2]}.", 
+            ".@#{user} GOT a RIDE in #{address[2]}.", 
+            ".@#{user} GOT a WHIP in #{address[2]}."]
   
   nth_hour = ["That's #{how_many[:hour]} in a row!",
-                "#{how_many[:hour]} in a row! you're on fire!"]
-  nth_day = ["That's your #{how_many[:day].ordinal} in one day!"]
-  nth_week = ["That's your #{how_many[:week].ordinal} of this week!"]
+                "#{how_many[:hour]} in a row! you're on fire!",
+                "#{how_many[:hour]} in a row! no one can stop you!"
+                ]
+  nth_day = ["That's your #{how_many[:day].ordinal} in the last 24h!"]
+  nth_week = ["That's your #{how_many[:week].ordinal} of the week!"]
   nth_month = ["That's #{how_many[:month]} RIDES this month!"] 
   nth_ever =  ["That's #{how_many[:ever]} RIDES!"]
   first = ["Congrats on your 1st GET :) You're now one of us."]
@@ -382,7 +391,10 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   if recovered then r = 0 
   else  r = rand(3) end
   
-  if how_many[:hour] == 4 or how_many[:hour] == 6
+  elsif how_many[:hour] < 10
+    response = "#{got[r]} #{nth_hour[2]}"
+    response = "#{got_s[r]} #{nth_hour[2]}" if response.toolong
+  elsif how_many[:hour] < 4
     response = "#{got[r]} #{nth_hour[1]}"
     response = "#{got_s[r]} #{nth_hour[1]}" if response.toolong
   elsif how_many[:hour] > 1
@@ -413,7 +425,7 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   #the messages should be less than 119 by now. this is a brute force shortener.
   response = shorten(response,119) if response.toolong
 
-  return response+" "+bkmeurl
+  return response+" "+ bkmeurl
 
   
 end

@@ -5,6 +5,7 @@
 
 # require 'bundler'
 # Bundler.require
+
  
  
 waiting = "\nwaiting for a new GET...\n\n"
@@ -63,7 +64,7 @@ TweetStream::Client.new.on_delete{ |status_id, user_id|
   #if myself, skip this one
   if user == $my_name then puts "myself, skipping"; next end
 
-  t = Time.now
+  t = Time.now.utc + Time.zone_offset('EST')
   now = t.strftime("at %I:%M%p %m/%d/%Y")
   puts "\n\nnew message received from @#{user} #{now}"
      
