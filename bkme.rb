@@ -12,15 +12,14 @@ waiting = "\nwaiting for a new GET...\n\n"
 retries = 0
 last = Time.now
 
-LOCALPATH = File.dirname(__FILE__)
+$LOCAL_PATH = File.dirname(__FILE__)
 
 
-$LOAD_PATH << LOCALPATH+'/lib'
+$LOAD_PATH << $LOCAL_PATH+'/lib'
 
 #clean screen, show art.
 print "\e[2J\e[f"
-puts LOCALPATH+"bkme.art"
-art = File.open(LOCALPATH+"/bkme.art")
+art = File.open($LOCAL_PATH+"/bkme.art")
 art.each do |l|
   puts l
 end

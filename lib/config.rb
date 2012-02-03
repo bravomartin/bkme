@@ -24,10 +24,10 @@ require 'nokogiri'
 require 'open-uri'
 require 'net/http'
 require 'net/https'
-require 'JSON'
+require 'json'
 require 'time'
 require 'aws/s3'
-require LOCALPATH+'/lib/expurrel'
+require $LOCAL_PATH+'/lib/expurrel'
   
   
 require 'credentials'
