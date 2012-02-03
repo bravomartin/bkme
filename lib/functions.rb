@@ -391,10 +391,10 @@ def create_response(user=nil, status_id=nil, url=nil, geodata =nil, address=nil,
   if recovered then r = 0 
   else  r = rand(3) end
   
-  if how_many[:hour] < 10
+  if how_many[:hour] > 10
     response = "#{got[r]} #{nth_hour[2]}"
     response = "#{got_s[r]} #{nth_hour[2]}" if response.toolong
-  elsif how_many[:hour] < 4
+  elsif how_many[:hour] > 4
     response = "#{got[r]} #{nth_hour[1]}"
     response = "#{got_s[r]} #{nth_hour[1]}" if response.toolong
   elsif how_many[:hour] > 1

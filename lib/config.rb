@@ -4,8 +4,8 @@ $LOAD_PATH << './lib'
 $LOAD_PATH << './'
 
   DEBUG = false
-  SAFE = false
-  TEST = false
+  SAFE = true
+  TEST = true
   ADMIN = "brvmrtn"
 
 puts "*********************************************************************" if TEST or DEBUG or SAFE
