@@ -6,3 +6,5 @@ _OLD/**/*
 _OLD
 bkme.tmproj
 lib/credentials.rb
+*.output
+*.pid
