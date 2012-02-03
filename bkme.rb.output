@@ -158,3 +158,63 @@ new message received from @EmprezzC at 06:05PM 01/29/2012
 no url, next 
 waiting for a new GET...
 
+bkme.rb: process with pid 9975 started.
+[2J[f/home/bitnami/bkmebkme.art
+                                  ___           ___           ___     
+    ___            _____         /__/|         /__/\         /  /\    
+   /__/\/\        /  /::\       |  |:|        |  |::\       /  /:/_   
+   \__\: /       /  /:/\:\      |  |:|        |  |:|:\     /  /:/ /\  
+ __/  /::\/\    /  /:/~/::\   __|  |:|      __|__|:|\:\   /  /:/ /:/_ 
+/__/\/:/\::/   /__/:/ /:/\:| /__/\_|:|____ /__/::::| \:\ /__/:/ /:/ /\
+ \ \::/ /::\   \  \:\/:/~/:/ \  \:\/:::::/ \  \:\~~\__\/ \  \:\/:/ /:/
+ /_/::\/:/\/    \  \::/ /:/   \  \::/~~~~   \  \:\        \  \::/ /:/ 
+ \_\/\::/        \  \::/ /     \  \:\        \  \:\        \  \::/:/  
+   /_/::\         \  \::/       \  \:\        \  \:\        \  \::/   
+   \_\/\/          \__\/         \__\/         \__\/         \__\/    
+
+
+
+Database authenticated successfully
+Twitter authenticated successfully
+last tweet: @brvmrtn GOT a WHIP at 13 Clinton St, Lower East Side, New York. That's 2 in a row! http://t.co/a3oZgAZ7
+Back on track! GET me some cars, amigo...
+
+waiting for a new GET...
+
+somewhere else
+Could not parse data entirely
+restarting the Twitter filter for the 1st time.
+
+waiting for a new GET...
+
+somewhere else
+Could not parse data entirely
+restarting the Twitter filter for the 2nd time.
+
+waiting for a new GET...
+
+
+
+new message received from @brvmrtn at 08:00PM 02/01/2012
+@brvmrtn says: "#bkme http://t.co/Q0TYWY3N"
+url found: pic.twitter.com/Q0TYWY3N
+geolocation: 40.72101191,-73.98730738
+couldn't get address from google
+REPLIED: sorry @brvmrtn, there was a problem processing your address. This doesn't happen often, don't let this stop you from GETTING more RIDES!
+db authorized.
+RECORD ADDED
+
+waiting for a new GET...
+
+somewhere else
+Could not parse data entirely
+restarting the Twitter filter for the 1st time.
+
+waiting for a new GET...
+
+somewhere else
+Failed to reconnect after 7 tries.
+restarting the Twitter filter for the 1st time.
+
+waiting for a new GET...
+
