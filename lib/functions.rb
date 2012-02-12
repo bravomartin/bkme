@@ -147,7 +147,7 @@ def find_file_url entities
     problemas = "problemas! don't know how to process #{service} images!"
     Twitter.direct_message_create(ADMIN, problemas) unless SAFE or DEBUG
     puts problemas
-    fileurl = -1
+    fileurl = nil
   end
 
   return fileurl
